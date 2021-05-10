@@ -1,14 +1,12 @@
-import {Box, makeStyles, TableCell, TableRow} from "@material-ui/core";
-import {LineScore} from "../LineScore";
-import {Skeleton} from "@material-ui/lab";
+import {Grid} from "@material-ui/core";
 import {Move} from "./Move";
 
 export const LineMoveList = ({moves, hoverable=true}) => {
     return (
-        <Box display="flex" flexDirection="row">
+        <Grid container alignItems="center">
             {moves.map((move, i) =>
                 <Move key={i} move={move} hoverable={hoverable}/>
             )}
-        </Box>
+        </Grid>
     )
 }

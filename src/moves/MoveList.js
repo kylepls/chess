@@ -2,7 +2,7 @@ import {makeStyles, Table, TableBody, TableCell, TableContainer, TableRow} from 
 import {useContext} from "react";
 import {BoardContext} from "../board/BoardContext";
 import {MoveArrows} from "./MoveArrows";
-import {HoverableMove} from "../explorer/HoverableMove";
+import {HoverableMove} from "../hover/HoverableMove";
 
 const useStyles = makeStyles({
     root: {

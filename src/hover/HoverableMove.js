@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useContext, useEffect, useLayoutEffect, useRef} from "react";
 import {BoardContext} from "../board/BoardContext";
+import {mousePosition} from "./MouseTracker";
 
 let activeHover;
 let timer;
@@ -8,7 +9,6 @@ const timeout = 100;
 const clearTimer = () => {
     if (timer) clearTimeout(timer)
 }
-
 
 export const HoverableMove = ({children, move}) => {
     if (!move) {
@@ -44,6 +44,16 @@ export const HoverableMove = ({children, move}) => {
         }
     }, [])
 
+    useLayoutEffect(() => {
+        // when the component is first loaded, hover events will not fire if the mouse is already over
+        const bb = ref.current.getBoundingClientRect()
+        const {mouseX, mouseY} = mousePosition;
+        if (bb.left <= mouseX && mouseX <= bb.right &&
+            bb.top <= mouseY && mouseY <= bb.bottom) {
+            setHover(true)
+        }
+    }, [])
+
     if (!move?.fen) {
         throw Error(`Invalid move: ${JSON.stringify(move)}`)
     }
@@ -53,7 +63,7 @@ export const HoverableMove = ({children, move}) => {
             onMouseLeave: () => setHover(false),
             onMouseEnter: () => setHover(true),
             ref: ref,
-            key: child.key || move.fen
+            key: child.key || JSON.stringify(move)
         })
     })
 

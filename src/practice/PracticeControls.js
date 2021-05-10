@@ -6,6 +6,7 @@ import StopIcon from '@material-ui/icons/Stop';
 import {useContext} from "react";
 import {PracticeContext} from "./PracticeContext";
 import CheckIcon from '@material-ui/icons/Check';
+import {BoardContext} from "../board/BoardContext";
 
 const useStyles = makeStyles({
     play: {
@@ -63,10 +64,11 @@ const StopButton = () => {
 
 const PlayButton = () => {
     const [practiceState, dispatchPractice] = useContext(PracticeContext);
+    const [{orientation}] = useContext(BoardContext)
 
     const styles = useStyles();
     if (practiceState.opening) {
-        const play = () => dispatchPractice({type: 'PLAY'})
+        const play = () => dispatchPractice({type: 'PLAY', payload: orientation})
         return (
             <div className={styles.play} onClick={play}>
                 <PlayArrowIcon/>

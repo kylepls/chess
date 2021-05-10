@@ -13,7 +13,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {TriBar} from "./Tribar";
 import {BoardContext} from "../board/BoardContext";
 import {queryLichessExplorer} from "../Lichess";
-import {HoverableMove} from "./HoverableMove";
+import {HoverableMove} from "../hover/HoverableMove";
 
 const useStyles = makeStyles({
     row: {

@@ -7,39 +7,86 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-import {makeStyles} from "@material-ui/core";
+import {Box, Grid, makeStyles, Typography} from "@material-ui/core";
+import {AnalysisContext} from "../analysis/AnalysisContext";
+
+import LoopIcon from '@material-ui/icons/Loop'
 
 const useStyles = makeStyles({
     root: {
-        display: "flex",
-        justifyContent: "center",
         height: '2.7em',
         '& svg': {
-            flex: 1,
-            height: 'auto'
+            height: '100%',
+            width: 'auto'
         },
         '& svg:hover': {
             cursor: 'pointer',
             background: '#ccc'
+        },
+    },
+    score: {
+        height: 'fit-content',
+        textAlign: 'center',
+        '& p': {
+            fontWeight: 900,
+            fontSize: '20px'
         }
+    },
+    flip: {
+        cursor: 'pointer',
+        alignSelf: 'center',
+        width: 'auto'
     }
 })
 
 export const MoveArrows = () => {
-    const [state, dispatch] = useContext(BoardContext);
+    const [boardState, dispatchBoard] = useContext(BoardContext);
+    const [analysisState, dispatchAnalysis] = useContext(AnalysisContext)
 
-    const start = () => dispatch({type: 'FIRST_MOVE'})
-    const previous = () => dispatch({type: 'PREVIOUS_MOVE'})
-    const next = () => dispatch({type: 'NEXT_MOVE'})
-    const end = () => dispatch({type: 'SET_MOVE', payload: state.history.length-1})
+    const scoreString = analysisState.evaluation?.score?.formatted || '--'
+
+    const flipBoard = () => {
+        dispatchBoard({type: 'FLIP_ORIENTATION'})
+    }
 
     const styles = useStyles();
     return (
-        <div className={styles.root}>
-            <SkipPreviousIcon onClick={start} />
+        <Grid container className={styles.root} justify="center">
+            <Grid item xs={1}>
+                <Grid container justify="center">
+                    <Box className={styles.flip}>
+                        <LoopIcon onClick={flipBoard}/>
+                    </Box>
+                </Grid>
+            </Grid>
+            <Grid item xs={9}>
+                <MoveControls/>
+            </Grid>
+            <Grid item xs={1}>
+                <Grid container justify="center" alignItems="center">
+                    <Grid item className={styles.score}>
+                        <Typography>{scoreString}</Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    )
+}
+
+const MoveControls = () => {
+    const [boardState, dispatchBoard] = useContext(BoardContext);
+
+    const start = () => dispatchBoard({type: 'FIRST_MOVE'})
+    const previous = () => dispatchBoard({type: 'PREVIOUS_MOVE'})
+    const next = () => dispatchBoard({type: 'NEXT_MOVE'})
+    const end = () => dispatchBoard({type: 'SET_MOVE', payload: boardState.history.length - 1})
+
+    return (
+        <Grid container justify="center">
+            <SkipPreviousIcon onClick={start}/>
             <KeyboardArrowLeftIcon onClick={previous}/>
             <KeyboardArrowRightIcon onClick={next}/>
             <SkipNextIcon onClick={end}/>
-        </div>
+        </Grid>
     )
 }

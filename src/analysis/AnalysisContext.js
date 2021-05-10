@@ -50,6 +50,8 @@ const Reducer = (state, {type, payload}) => {
         case 'SET_RUN':
             const newLines = payload ? state.lines : [];
             return {...state, run: payload, lines: newLines}
+        case 'SET_EVALUATION':
+            return {...state, evaluation: payload}
         default:
             return state;
     }

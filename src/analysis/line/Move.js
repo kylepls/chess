@@ -1,9 +1,10 @@
-import {HoverableMove} from "../../explorer/HoverableMove";
+import {HoverableMove} from "../../hover/HoverableMove";
 import {Box, makeStyles, Paper} from "@material-ui/core";
 
 const useStyles = makeStyles({
     move: {
         width: 'fit-content',
+        height: 'fit-content',
         whiteSpace: 'nowrap',
         paddingRight: '0.5em',
         textAlign: 'center',

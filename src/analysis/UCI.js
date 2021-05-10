@@ -9,13 +9,13 @@ export default class UCI {
 
     setReceiver(receiver) {
         this.engine.onmessage = ({data}) => {
-            if (!data.includes('info')) console.log(`<= ${data}`)
+            // if (!data.includes('info')) console.log(`<= ${data}`)
             if (receiver) receiver(data)
         }
     }
 
     sendCommand(cmd) {
-        console.log(`=> ${cmd}`)
+        // console.log(`=> ${cmd}`)
         this.engine.postMessage(cmd)
     }
 

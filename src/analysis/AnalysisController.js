@@ -4,6 +4,7 @@ import {BoardContext} from "../board/BoardContext";
 import Chess from 'chess.js'
 import UCI from "./UCI";
 import {getLineMoves} from "../MoveUtils"
+import {parseScore} from "./ScoreFormat";
 
 const chessjs = new Chess();
 
@@ -21,6 +22,7 @@ export const AnalysisController = ({children}) => {
         if (!run) uci.postStop()
         return () => uci.postStop()
     }, [run])
+
     useEffect(() => {
         if (run) {
             dispatchAnalysis({type: 'SET_THINKING', payload: 'TRUE'})
@@ -34,11 +36,11 @@ export const AnalysisController = ({children}) => {
 
             uci.stop()
                 .then(() => uci.isReady())
+                .then(() => uci.setPosition(viewFen))
                 .then(() => uci.eval())
                 .then (evaluation => {
-                    console.log(`EVAL: ${JSON.stringify(evaluation)}`)
+                    dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
                 })
-                .then(() => uci.setPosition(viewFen))
                 .then(() => {
                     return uci.go(depth, linesCount, (lines) => {
                         const fixedLines = fixLines(lines)
@@ -46,6 +48,14 @@ export const AnalysisController = ({children}) => {
                     })
                 })
                 .then((bestMove) => dispatchAnalysis({type: 'DONE'}))
+        } else {
+            uci.stop()
+                .then(() => uci.isReady())
+                .then(() => uci.setPosition(viewFen))
+                .then(() => uci.eval())
+                .then(evaluation => {
+                    dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
+                })
         }
     }, [viewFen, run])
 
@@ -89,4 +99,10 @@ export const AnalysisController = ({children}) => {
     }, [lines, boardState.ghost])
 
     return <>{children}</>
+}
+
+const mapEvaluation = (evaluation) => {
+    return {
+        score: parseScore(evaluation.evaluation)
+    }
 }

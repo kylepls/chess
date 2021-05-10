@@ -45,3 +45,7 @@ export const makeMoveFromTo = (fen, from, to) => {
     const res = chess.move({from, to})
     return makeMove(res.from, res.to, res.san, chess.fen())
 }
+
+export const flip = (side) => {
+    return side === 'black' ? 'white' : 'black'
+}

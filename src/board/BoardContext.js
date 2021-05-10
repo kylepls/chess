@@ -67,7 +67,7 @@ const Reducer = (state, {type, payload}) => {
             return {...state, currentMove: newNextMoveIndex};
         case 'SET_MOVES':
             updateChessjs(chessjs, boardChessjs, payload)
-            return {...state, currentMove: state.history.length, history: payload};
+            return {...state, currentMove: payload.length-1, history: payload};
         case 'SET_MOVE':
             updateBoardChessjs(chessjs, boardChessjs, payload, state.history)
             return {...state, currentMove: payload};
