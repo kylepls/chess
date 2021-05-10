@@ -7,6 +7,7 @@ import {useContext} from "react";
 import {PracticeContext} from "./PracticeContext";
 import CheckIcon from '@material-ui/icons/Check';
 import {BoardContext} from "../board/BoardContext";
+import {MoveArrows} from "../moves/MoveArrows";
 
 const useStyles = makeStyles({
     play: {
@@ -75,7 +76,6 @@ const PlayButton = () => {
             </div>
         )
     } else {
-        // TODO
-        return null;
+        return <MoveArrows />
     }
 }

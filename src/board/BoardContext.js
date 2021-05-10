@@ -36,6 +36,7 @@ const updateBoardChessjs = (chessjs, boardChessjs, currentMove, history) => {
 
 const updateChessjs = (chessjs, boardChessjs, history) => {
     chessjs.reset();
+    boardChessjs.reset()
     if (history.length > 0) {
         const move = history[history.length-1]
         chessjs.load(move.fen)

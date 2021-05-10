@@ -10,7 +10,7 @@ import 'react-virtualized/styles.css'
 import {Grid, makeStyles, Typography} from "@material-ui/core";
 import {AutoSizer, Column, Table} from "react-virtualized";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     openingName: {},
     row: {
         borderBottomColor: 'rgb(128,128,128, 0.4)',
@@ -18,13 +18,22 @@ const useStyles = makeStyles({
         borderBottom: '1px solid',
         cursor: 'pointer',
         '&:hover': {
-            background: '#aaa'
+            background: theme.palette.action.hover
+        },
+        '&:active': {
+            background: theme.palette.primary.dark
         }
     },
     selected: {
-        background: '#aaa'
+        background: theme.palette.primary.light,
+        '&:hover': {
+            background: theme.palette.primary.main
+        },
+        '&:active': {
+            background: theme.palette.primary.dark
+        }
     }
-})
+}))
 
 export const PGNSelector = () => {
     const [{openings}, dispatchOpening] = useContext(OpeningsContext);
@@ -38,24 +47,33 @@ export const PGNSelector = () => {
     if (!openings) {
         return <Loader/>
     } else {
-        return <ResizeTable />
+        return <ResizeTable/>
     }
 }
 
 const ResizeTable = () => {
-    const [openingName, setOpeningName] = useSyncedLocalStorage('selectedOpening')
-    const [{openings}, dispatchOpening] = useContext(OpeningsContext);
 
+    const [{openings}, dispatchOpening] = useContext(OpeningsContext);
     const [practiceState, dispatchPractice] = useContext(PracticeContext);
     const [boardState, dispatchBoard] = useContext(BoardContext);
 
+    const [selectedOpeningName, setSelectedOpeningName] = useSyncedLocalStorage('selectedOpening')
     const tableRef = useRef()
 
-    const sortedEntries = Object.values(openings)
+    let sortedEntries = Object.values(openings)
         .sort((a, b) => a.name.localeCompare(b.name))
 
+    if (!selectedOpeningName) {
+        sortedEntries = sortedEntries.filter(it =>
+            it.moves.every((it, i) => {
+                const boardMove = boardState.history[i]
+                return !boardMove || (boardMove?.from === it.from && boardMove?.to === it.to)
+            })
+        )
+    }
+
     useLayoutEffect(() => {
-        const selectedIndex = sortedEntries.findIndex(it => it.name === openingName)
+        const selectedIndex = sortedEntries.findIndex(it => it.name === selectedOpeningName)
         if (selectedIndex !== -1) {
             const timeout = setTimeout(() => {
                 tableRef.current.scrollToRow(selectedIndex)
@@ -65,21 +83,28 @@ const ResizeTable = () => {
     }, [])
 
     useEffect(() => {
-        if (openingName && openings) {
-            const opening = openings[openingName]
-            if (!opening) {
-                setOpeningName(null)
+        if (openings) {
+            if (selectedOpeningName) {
+                const opening = openings[selectedOpeningName]
+                if (!opening) {
+                    setSelectedOpeningName(null)
+                } else {
+                    dispatchPractice({type: 'SET_OPENING', payload: opening})
+                    dispatchBoard({type: 'SET_MOVES', payload: opening.moves})
+                    dispatchBoard({type: 'SET_ORIENTATION', payload: opening.orientation})
+                }
             } else {
-                dispatchPractice({type: 'SET_OPENING', payload: opening})
-                dispatchBoard({type: 'SET_MOVES', payload: opening.moves})
-                dispatchBoard({type: 'SET_ORIENTATION', payload: opening.orientation})
+                dispatchPractice({type: 'SET_OPENING', payload: null})
+                dispatchBoard({type: 'SET_MOVES', payload: []})
             }
         }
-    }, [openingName])
+    }, [selectedOpeningName])
 
     const select = ({rowData: opening}) => {
-        if (openingName !== opening.name) {
-            setOpeningName(opening.name)
+        if (selectedOpeningName !== opening.name) {
+            setSelectedOpeningName(opening.name)
+        } else {
+            setSelectedOpeningName(null)
         }
     }
 
@@ -99,8 +124,8 @@ const ResizeTable = () => {
     const styles = useStyles()
     const rowClass = ({index}) => {
         const opening = sortedEntries[index]
-        if (openingName === opening?.name) {
-            return styles.selected
+        if (selectedOpeningName === opening?.name) {
+            return `${styles.selected} ${styles.row}`
         } else {
             return styles.row
         }

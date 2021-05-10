@@ -25,7 +25,7 @@ const useStyles = makeStyles({
         }
     },
     navigationIcons: {
-        flex: '0 1',
+        height: '2.7em'
     }
 })
 

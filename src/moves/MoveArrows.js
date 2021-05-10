@@ -12,9 +12,8 @@ import {AnalysisContext} from "../analysis/AnalysisContext";
 
 import LoopIcon from '@material-ui/icons/Loop'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
-        height: '2.7em',
         '& svg': {
             height: '100%',
             width: 'auto'
@@ -23,6 +22,7 @@ const useStyles = makeStyles({
             cursor: 'pointer',
             background: '#ccc'
         },
+        background: theme.palette.background.default
     },
     score: {
         height: 'fit-content',
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
         alignSelf: 'center',
         width: 'auto'
     }
-})
+}))
 
 export const MoveArrows = () => {
     const [boardState, dispatchBoard] = useContext(BoardContext);

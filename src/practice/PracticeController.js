@@ -16,7 +16,6 @@ export const PracticeController = ({children}) => {
 
     useEffect(() => {
         if (practiceState.playing && practiceState.state === 'thinking') {
-            // TODO: duplicate
             queryLichessExplorer(boardState.chessjs.fen(), data => {
                 const random = Math.random()
 
@@ -51,14 +50,6 @@ export const PracticeController = ({children}) => {
             })
         }
     }, [practiceState.state]);
-
-    useEffect(() => {
-        // // TODO duplicate
-        // const turn = boardState.boardChessjs.turn() === 'w' ? 'white' : 'black';
-        // if (practiceState.playing && boardState.orientation !== turn) {
-        //     dispatchPractice({type: 'PLAY', payload: 'thinking'})
-        // }
-    }, [practiceState.playing])
 
     useEffect(() => {
         const turn = boardState.boardChessjs.turn() === 'w' ? 'white' : 'black';

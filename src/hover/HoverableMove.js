@@ -6,6 +6,8 @@ let activeHover;
 let timer;
 const timeout = 100;
 
+const enabled = true
+
 const clearTimer = () => {
     if (timer) clearTimeout(timer)
 }
@@ -27,11 +29,11 @@ export const HoverableMove = ({children, move}) => {
     }
 
     const setHover = (value) => {
-        if (value && activeHover !== move) {
+        if (value && activeHover !== move && enabled) {
             if (timer) clearTimeout(timer)
             dispatchBoard({type: 'SET_GHOST', payload: move})
             activeHover = move
-        } else if (activeHover === move) {
+        } else if (activeHover === move && enabled) {
             setTimer()
         }
     }

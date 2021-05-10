@@ -23,7 +23,6 @@ export const RightBar = () => {
     const [analysisState, dispatchAnalysis] = useContext(AnalysisContext);
 
     const tabListRef = useRef()
-    const contentRef = useRef()
 
     useEffect(() => {
         const run = tab === 'analysis';
@@ -44,7 +43,7 @@ export const RightBar = () => {
                             <Tab label="practice" value="practice"/>
                             <Tab label="analysis" value="analysis"/>
                         </TabList>
-                        <div ref={contentRef} style={{
+                        <div style={{
                             height: `calc(100% - ${headerHeight}px)`
                         }}>
                             <TabPanel className={styles.tabPanel} value="explorer">
