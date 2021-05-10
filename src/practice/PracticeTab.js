@@ -17,13 +17,13 @@ export const PracticeTab = () => {
     return (
         <PracticeController>
             {practiceState.playing ?
-                <VerticalSplit splits={[20, 65, 10]}>
+                <VerticalSplit splits={[25, 65, 5]}>
                     <MoveList/>
                     <Explorer fen={displayFen}/>
                     <PracticeControls/>
                 </VerticalSplit>
                 :
-                <VerticalSplit splits={[30, 55, 10]}>
+                <VerticalSplit splits={[30, 60, 5]}>
                     <PGNSelector/>
                     <Explorer fen={displayFen}/>
                     <PracticeControls/>

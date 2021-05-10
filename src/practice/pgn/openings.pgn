@@ -5,11 +5,12 @@
 *
 
 [Opening "Sicilian Defense: 2.Nf3 d6 3.d4 cxd4"]
+[PlayAs "black"]
 
 1.e4 c5 2.Nf3 d6 3.d4 cxd4
 *
 
-[Opening "King'sGambit Accepted"]
+[Opening "King's Gambit Accepted"]
 
 1.e4 e5 2.f4 exf4 3.Nf3 g5
 *
@@ -25,11 +26,13 @@
 *
 
 [Opening "Nimzo-Indian Defense"]
+[PlayAs "black"]
 
 1.d4 Nf6 2.c4 e6 3.Nc3 Bb4
 *
 
 [Opening "Pirc Defense: Main Line"]
+[PlayAs "black"]
 
 1.e4 d6 2.d4 Nf6 3.Nc3 g6
 *

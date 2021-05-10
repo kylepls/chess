@@ -33,6 +33,10 @@ const useStyles = makeStyles(theme => ({
             left: '2px'
         }
     }),
+    boardArea: {
+        borderRadius: theme.shape.borderRadius,
+        overflow: 'hidden'
+    }
 }))
 
 const validMoves = (chess) => {
@@ -74,8 +78,8 @@ export const Board = () => {
     useEffect(() => {
         const {boardChessjs, currentMove} = state;
         if (!state.ghost) {
-            const history = state.history.slice(0, currentMove)
-            const lastMove = history.length > 0 ? history[history.length - 1] : null;
+            const history = state.history.slice(0, currentMove+1)
+            const lastMove = history.length > 0 ? history.slice(-1)[0] : null;
             cgLoad(cgRef.current, boardChessjs, lastMove)
         } else {
             const move = state.ghost;
@@ -142,8 +146,9 @@ const BoardArea = ({children}) => {
         return () => window.removeEventListener('resize', updateSize)
     }, []);
 
+    const styles = useStyles()
     return (
-        <div ref={divRef}>
+        <div className={styles.boardArea} ref={divRef}>
             {children}
         </div>
     )

@@ -39,16 +39,17 @@ export const MoveList = () => {
 
     const makeCell = (move, i) => {
         const click = () => dispatch({type: 'SET_MOVE', payload: i})
+        let key = `${i}+${move.fen}`;
         const content =
             <TableCell
-                key={move.fen}
+                key={key}
                 onClick={click}
                 className={`${styles.item} ${(activeCss(i))}`}>
                 {move.san}
             </TableCell>;
         if (i !== state.currentMove) {
             return (
-                <HoverableMove key={move.fen} move={move}>
+                <HoverableMove key={key} move={move}>
                     {content}
                 </HoverableMove>
             )

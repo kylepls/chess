@@ -1,7 +1,6 @@
-import {useContext, useEffect, useLayoutEffect, useMemo, useRef} from "react";
+import {useContext, useEffect, useLayoutEffect, useRef} from "react";
 
 import {OpeningsContext} from "./OpeningsContext";
-import {Skeleton} from "@material-ui/lab";
 import {PracticeContext} from "../PracticeContext";
 import {BoardContext} from "../../board/BoardContext";
 import {LineMoveList} from "../../analysis/line/LineMoveList";
@@ -48,7 +47,7 @@ const ResizeTable = () => {
     const [{openings}, dispatchOpening] = useContext(OpeningsContext);
 
     const [practiceState, dispatchPractice] = useContext(PracticeContext);
-    const [{history}, dispatchBoard] = useContext(BoardContext);
+    const [boardState, dispatchBoard] = useContext(BoardContext);
 
     const tableRef = useRef()
 
