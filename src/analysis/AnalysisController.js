@@ -48,6 +48,7 @@ export const AnalysisController = ({children}) => {
                     })
                 })
                 .then((bestMove) => dispatchAnalysis({type: 'DONE'}))
+                .catch(reason => console.info(reason))
         } else {
             uci.stop()
                 .then(() => uci.isReady())
@@ -56,6 +57,7 @@ export const AnalysisController = ({children}) => {
                 .then(evaluation => {
                     dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
                 })
+                .catch(reason => console.info(reason))
         }
     }, [viewFen, run])
 

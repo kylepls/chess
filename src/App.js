@@ -13,7 +13,6 @@ import {PracticeContextProvider} from "./practice/PracticeContext";
 import {AnalysisContextProvider} from "./analysis/AnalysisContext";
 import {AnalysisController} from "./analysis/AnalysisController";
 import {RightBar} from "./RightBar";
-import {MouseTracker} from "./hover/MouseTracker";
 
 const useStyles = makeStyles({
     root: {
@@ -45,9 +44,7 @@ export const App = () => {
                             <AnalysisContextProvider>
                                 <PracticeContextProvider>
                                     <AnalysisController>
-                                        <MouseTracker>
                                             <AppArea key={0}/>
-                                        </MouseTracker>
                                     </AnalysisController>
                                 </PracticeContextProvider>
                             </AnalysisContextProvider>

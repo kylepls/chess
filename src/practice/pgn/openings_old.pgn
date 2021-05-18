@@ -1,0 +1,523 @@
+﻿[Opening "Portuguese Gambit"]
+[PlayAs "black"]
+
+1.e4 d5 2.exd5 Nf6
+*
+
+[Opening "Sicilian Defense: 2.Nf3 d6 3.d4 cxd4"]
+[PlayAs "black"]
+
+1.e4 c5 2.Nf3 d6 3.d4 cxd4
+*
+
+[Opening "King's Gambit Accepted"]
+
+1.e4 e5 2.f4 exf4 3.Nf3 g5
+*
+
+[Opening "King's Indian Defense: Normal Variation"]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 Bg7
+*
+
+[Opening "Ruy López Opening: Morphy Defense"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bb5 a6
+*
+
+[Opening "Nimzo-Indian Defense"]
+[PlayAs "black"]
+
+1.d4 Nf6 2.c4 e6 3.Nc3 Bb4
+*
+
+[Opening "Pirc Defense: Main Line"]
+[PlayAs "black"]
+
+1.e4 d6 2.d4 Nf6 3.Nc3 g6
+*
+
+[Opening "Danish Gambit"]
+
+1.e4 e5 2.d4 exd4 3.c3 dxc3
+*
+
+[Opening "Slav Defense: Modern Line, 3...Nf6"]
+
+1.d4 d5 2.c4 c6 3.Nf3 Nf6
+*
+
+[Opening "French Defense: Winawer Variation"]
+
+1.e4 e6 2.d4 d5 3.Nc3 Bb4
+*
+
+[Opening "Grünfeld Defense"]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 d5
+*
+
+[Opening "Scotch Game: 3...exd4"]
+
+1.e4 e5 2.Nf3 Nc6 3.d4 exd4
+*
+
+[Opening "Queen's Indian Defense"]
+
+1.d4 Nf6 2.c4 e6 3.Nf3 b6
+*
+
+[Opening "Sicilian Defense: Open, 3...cxd4"]
+
+1.e4 c5 2.Nf3 Nc6 3.d4 cxd4
+*
+
+[Opening "Alekhine Defense: Two Pawns Attack, 3...Nb6"]
+
+1.e4 Nf6 2.e5 Nd5 3.c4 Nb6
+*
+
+[Opening "Benko Gambit"]
+
+1.d4 Nf6 2.c4 c5 3.d5 b5
+*
+
+[Opening "Caro-Kann Defense: 2.d4 d5 3.Nc3 dxe4"]
+
+1.e4 c6 2.d4 d5 3.Nc3 dxe4
+*
+
+[Opening "Queen's Gambit Declined: 3.Nf3 Nf6"]
+
+1.d4 d5 2.c4 e6 3.Nf3 Nf6
+*
+
+[Opening "Four Knights Game"]
+
+1.e4 e5 2.Nf3 Nc6 3.Nc3 Nf6
+*
+
+[Opening "Queen's Gambit Declined: 3.Nf3 Nf6"]
+
+1.d4 Nf6 2.c4 e6 3.Nf3 d5
+*
+
+[Opening "Sicilian Defense: French Variation, 3.d4 cxd4"]
+
+1.e4 c5 2.Nf3 e6 3.d4 cxd4
+*
+
+[Opening "Bogo-Indian Defense"]
+
+1.d4 Nf6 2.c4 e6 3.Nf3 Bb4+
+*
+
+[Opening "Ruy López Opening: Berlin Defense"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6
+*
+
+[Opening "Queen's Gambit Declined: Queen's Knight Variation, 3...Nf6"]
+
+1.d4 d5 2.c4 e6 3.Nc3 Nf6
+*
+
+[Opening "French Defense: Classical Variation"]
+
+1.e4 e6 2.d4 d5 3.Nc3 Nf6
+*
+
+[Opening "Réti Opening: King's Indian Attack, Symmetrical Defense, 3.Bg2 Bg7"]
+
+1.Nf3 Nf6 2.g3 g6 3.Bg2 Bg7
+*
+
+[Opening "Pirc Defense: Czech Defense"]
+
+1.e4 d6 2.d4 Nf6 3.Nc3 c6
+*
+
+[Opening "Queen's Gambit Declined: Queen's Knight Variation, 3...Nf6"]
+
+1.d4 Nf6 2.c4 e6 3.Nc3 d5
+*
+
+[Opening "Sicilian Defense: Canal, Main Line"]
+
+1.e4 c5 2.Nf3 d6 3.Bb5+ Bd7
+*
+
+[Opening "Slav Defense: Modern Line, 3...Nf6"]
+
+1.d4 d5 2.Nf3 Nf6 3.c4 c6
+*
+
+[Opening "Giuoco Piano Game"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5
+*
+
+[Opening "Giuoco Piano Game: Evan's Gambit"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4. b4
+*
+
+[Opening "Queen's Gambit Declined: Semi-Slav Defense, Accelerated Move-Order"]
+
+1.d4 d5 2.c4 e6 3.Nc3 c6
+*
+
+[Opening "Alekhine Defense: Normal Variation, 3.d4 d6"]
+
+1.e4 Nf6 2.e5 Nd5 3.d4 d6
+*
+
+[Opening "King's Indian Defense: 3.g3 Bg7"]
+
+1.d4 Nf6 2.c4 g6 3.g3 Bg7
+*
+
+[Opening "Scandinavian Defense: Mieses-Kotrč, Main Line"]
+
+1.e4 d5 2.exd5 Qxd5 3.Nc3 Qa5
+*
+
+[Opening "King's Indian Defense: 3.Nf3 Bg7"]
+
+1.d4 Nf6 2.c4 g6 3.Nf3 Bg7
+*
+
+[Opening "Caro-Kann Defense: Exchange Variation, 3...cxd5"]
+
+1.e4 c6 2.d4 d5 3.exd5 cxd5
+*
+
+[Opening "Queen's Gambit Declined: Charousek Variation"]
+
+1.d4 d5 2.c4 e6 3.Nc3 Be7
+*
+
+[Opening "Sicilian Defense: Canal Attack, 3...Nd7"]
+
+1.e4 c5 2.Nf3 d6 3.Bb5+ Nd7
+*
+
+[Opening "Benoni Defense: Modern Variation"]
+
+1.d4 Nf6 2.c4 c5 3.d5 e6
+*
+
+[Opening "French Defense: Tarrasch, Closed"]
+
+1.e4 e6 2.d4 d5 3.Nd2 Nf6
+*
+
+[Opening "Catalan Opening: 3...d5"]
+
+1.d4 Nf6 2.c4 e6 3.g3 d5
+*
+
+[Opening "Sicilian Defense: Closed, Fianchetto Variation, 3...g6"]
+
+1.e4 c5 2.Nc3 Nc6 3.g3 g6
+*
+
+[Opening "Queen's Gambit Accepted: 3.Nf3 Nf6"]
+
+1.d4 d5 2.c4 dxc4 3.Nf3 Nf6
+*
+
+[Opening "Caro-Kann Defense: Advance Variation, 3...Bf5"]
+
+1.e4 c6 2.d4 d5 3.e5 Bf5
+*
+
+[Opening "Indian Game: East Indian, Przepiórka Variation, 3...Bg7"]
+
+1.d4 Nf6 2.Nf3 g6 3.g3 Bg7
+*
+
+[Opening "French Defense: Tarrasch, Open"]
+
+1.e4 e6 2.d4 d5 3.Nd2 c5
+*
+
+[Opening "Slav Defense: Exchange Variation, 3...cxd5"]
+
+1.d4 d5 2.c4 c6 3.cxd5 cxd5
+*
+
+[Opening "Sicilian Defense: Alapin Variation, 2...Nf6 3.e5 Nd5"]
+
+1.e4 c5 2.c3 Nf6 3.e5 Nd5
+*
+
+[Opening "Torre Attack: Fianchetto Defense"]
+
+1.d4 Nf6 2.Nf3 g6 3.Bg5 Bg7
+*
+
+[Opening "Italian Game: Two Knights Defense"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6
+*
+
+[Opening "Indian Game: East Indian, Anti-Nimzo-Indian Variation, 3...c5"]
+
+1.d4 Nf6 2.c4 e6 3.Nf3 c5
+*
+
+[Opening "Petrov's Defense: Classical Variation, 3...d6"]
+
+1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6
+*
+
+[Opening "Sicilian Defense: Hyperaccelerated Dragon, Fianchetto, Pterodactyl Defense"]
+
+1.e4 c5 2.Nf3 g6 3.d4 Bg7
+*
+
+[Opening "Queen's Gambit Declined: 3.Nf3 Nf6"]
+
+1.d4 d5 2.Nf3 Nf6 3.c4 e6
+*
+
+[Opening "Modern Defense: Standard Line, 3...d6"]
+
+1.e4 g6 2.d4 Bg7 3.Nc3 d6
+*
+
+[Opening "English Opening: Four Knights Variation"]
+
+1.c4 e5 2.Nc3 Nf6 3.Nf3 Nc6
+*
+
+[Opening "French Defense: Tarrasch, Guimard Defense"]
+
+1.e4 e6 2.d4 d5 3.Nd2 Nc6
+*
+
+[Opening "London System: 3...Bg7"]
+
+1.d4 Nf6 2.Nf3 g6 3.Bf4 Bg7
+*
+
+[Opening "Sicilian Defense: Delayed Alapin Variation, 3...Nf6"]
+
+1.e4 c5 2.Nf3 d6 3.c3 Nf6
+*
+
+[Opening "Tarrasch Defense"]
+
+1.d4 d5 2.c4 e6 3.Nc3 c5
+*
+
+[Opening "Sicilian Defense: Anti-Qxd4 Move-Order"]
+
+1.e4 c5 2.Nf3 d6 3.d4 Nf6
+*
+
+[Opening "Dutch Defense: Fianchetto, Semi-Leningrad Variation"]
+
+1.d4 f5 2.g3 Nf6 3.Bg2 g6
+*
+
+[Opening "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack, 3...e6"]
+
+1.e4 c5 2.Nf3 Nc6 3.Bb5 e6
+*
+
+[Opening "Slav Defense: Modern, Triangle System"]
+
+1.d4 d5 2.c4 e6 3.Nf3 c6
+*
+
+[Opening "Modern Defense: Standard Line, 3...c6"]
+
+1.e4 g6 2.d4 Bg7 3.Nc3 c6
+*
+
+[Opening "King's Indian Attack: 2...c6 3.Bg2 Bg4"]
+
+1.Nf3 d5 2.g3 c6 3.Bg2 Bg4
+*
+
+[Opening "Scandinavian Defense: Mieses-Kotrč, Gubinsky-Melts Defense"]
+
+1.e4 d5 2.exd5 Qxd5 3.Nc3 Qd6
+*
+
+[Opening "King's Indian Attack: Yugoslav Variation, 3.Bg2 c6"]
+
+1.Nf3 d5 2.g3 Nf6 3.Bg2 c6
+*
+
+[Opening "Sicilian Defense: Grand Prix Attack, 3...g6"]
+
+1.e4 c5 2.Nc3 Nc6 3.f4 g6
+*
+
+[Opening "Budapest Defense: 3.dxe5 Ng4"]
+
+1.d4 Nf6 2.c4 e5 3.dxe5 Ng4
+*
+
+[Opening "French Defense: Rubinstein Variation"]
+
+1.e4 e6 2.d4 d5 3.Nc3 dxe4
+*
+
+[Opening "Torre Attack: 3...c5"]
+
+1.d4 Nf6 2.Nf3 e6 3.Bg5 c5
+*
+
+[Opening "Bishop's Opening: Berlin Defense, 3.d3 Nc6"]
+
+1.e4 e5 2.Bc4 Nf6 3.d3 Nc6
+*
+
+[Opening "English Opening: Anglo-Indian, Anglo-Grünfeld Defense, 3.cxd5 Nxd5"]
+
+1.c4 Nf6 2.Nc3 d5 3.cxd5 Nxd5
+*
+
+[Opening "Sicilian Defense: Canal Attack, 3...Nc6"]
+
+1.e4 c5 2.Nf3 d6 3.Bb5+ Nc6
+*
+
+[Opening "Modern Defense: 3.Nc3 Bg7"]
+
+1.d4 g6 2.c4 Bg7 3.Nc3 d6
+*
+
+[Opening "Ruy López Opening: Jaenisch Gambit"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bb5 f5
+*
+
+[Opening "English Opening: Reversed Sicilian, Closed, 3.g3 g6"]
+
+1.c4 e5 2.Nc3 Nc6 3.g3 g6
+*
+
+[Opening "Philidor Defense: Exchange Variation"]
+
+1.e4 e5 2.Nf3 d6 3.d4 exd4
+*
+
+[Opening "Queen's Gambit Declined: Pseudo-Tarrasch Defense"]
+
+1.d4 d5 2.c4 e6 3.Nf3 c5
+*
+
+[Opening "Sicilian Defense: Canal Attack, 3...Nc6"]
+
+1.e4 c5 2.Nf3 Nc6 3.Bb5 d6
+*
+
+[Opening "King's Indian Attack: Yugoslav Variation"]
+
+1.g3 d5 2.Nf3 Nf6 3.Bg2 c6
+*
+
+[Opening "Sicilian Defense: Hyperaccelerated Dragon, Fianchetto Variation, 3...cxd4"]
+
+1.e4 c5 2.Nf3 g6 3.d4 cxd4
+*
+
+[Opening "Nimzowitsch-Larsen Attack: Modern Variation"]
+
+1.b3 e5 2.Bb2 Nc6 3.e3 d5
+*
+
+[Opening "Giuoco Piano Game"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5
+*
+
+[Opening "Dutch Defense: Fianchetto, Semi-Leningrad Variation"]
+
+1.d4 f5 2.g3 Nf6 3.Bg2 g6
+*
+
+[Opening "King's Pawn Opening: Wayward Queen Attack"]
+
+1.e4 e5 2.Qh5 Nc6 3.Bc4 g6
+*
+
+[Opening "Ruy López Opening: Classical Defense"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bb5 Bc5
+*
+
+[Opening "Indian Game: Black Knight's Tango"]
+
+1.d4 Nf6 2.c4 Nc6 3.Nc3 e5
+*
+
+[Opening "Four Knights Game"]
+
+1.e4 e5 2.Nf3 Nc6 3.Nc3 Nf6
+*
+
+[Opening "Trompowsky Attack"]
+
+1.d4 Nf6 2.Bg5 Ne4 3.Bf4 c5
+*
+
+[Opening "Modern Defense with 1.e4: 2.d4 Bg7 3.Nf3 d6"]
+
+1.e4 g6 2.d4 Bg7 3.Nf3 d6
+*
+
+[Opening "Sicilian Defense: Alapin Variation, 2...e6 3.d4 d5"]
+
+1.e4 c5 2.c3 e6 3.d4 d5
+*
+
+[Opening "Colle System"]
+
+1.d4 d5 2.Nf3 Nf6 3.e3 e6
+*
+
+[Opening "Scandinavian Defense: Modern, Marshall Variation"]
+
+1.e4 d5 2.exd5 Nf6 3.d4 Nxd5
+*
+
+[Opening "Queen's Gambit Declined: Albin Countergambit"]
+
+1.d4 d5 2.c4 e5 3.dxe5 d4
+*
+
+[Opening "Caro-Kann Defense: Two Knights, Mindeno Variation"]
+
+1.e4 c6 2.Nc3 d5 3.Nf3 Bg4
+*
+
+[Opening "Bird's Opening: Dutch Variation, 2. Nf3"]
+
+1.f4 d5 2.Nf3 g6 3.e3 Bg7
+*
+
+[Opening "Petrov's Defense: Steinitz Attack, Symmetrical Variation"]
+
+1.e4 e5 2.Nf3 Nf6 3.d4 Nxe4
+*
+
+[Opening "Ruy López Opening: Fianchetto Defense"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bb5 g6
+*
+
+[Opening "Fried Liver"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 5. exd5 Nxd5 6. Nxf7 Kxf7 7. Qf3+
+*
+
+[Opening "Italian Game: Two Knights Defense, Traxler Counterattack"]
+
+1. e4 e5 2. Bc4 Nf6 3. Nf3 Nc6 4. Ng5 Bc5 5. Nxf7 Bxf2+
+*

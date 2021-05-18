@@ -1,4 +1,4 @@
-import {useContext, useEffect, useLayoutEffect, useRef} from "react";
+import {memo, useContext, useEffect, useLayoutEffect, useMemo, useRef} from "react";
 
 import {OpeningsContext} from "./OpeningsContext";
 import {PracticeContext} from "../PracticeContext";
@@ -37,65 +37,71 @@ const useStyles = makeStyles(theme => ({
 
 export const PGNSelector = () => {
     const [{openings}, dispatchOpening] = useContext(OpeningsContext);
+    const [boardState, dispatchBoard] = useContext(BoardContext);
 
     useEffect(() => {
         loadPgn((openings) => {
-            dispatchOpening({type: 'SET_OPENINGS', payload: openings})
+            const sortedEntries = Object.values(openings)
+                .sort((a, b) => a.name.localeCompare(b.name))
+            dispatchOpening({type: 'SET_OPENINGS', payload: sortedEntries})
         })
     }, [dispatchOpening])
 
     if (!openings) {
         return <Loader/>
     } else {
-        return <ResizeTable/>
+        return <MemoResizeTable history={boardState.history.slice(0, boardState.currentMove + 1)}
+                                dispatchBoard={dispatchBoard}
+                                fen={boardState.chessjs.fen()}/>
     }
 }
 
-const ResizeTable = () => {
+const MemoResizeTable = (props) => {
+    // This prevents the history prop from redrawing the table
+    return useMemo(() => (<ResizeTable {...props} />), [props.fen])
+}
 
-    const [{openings}, dispatchOpening] = useContext(OpeningsContext);
+const renderName = ({cellData: name}) => {
+    return (
+        <Grid container alignItems='center'>
+            <Typography>{name}</Typography>
+        </Grid>
+    )
+}
+
+const renderMoves = ({cellData: moves}) => {
+    return <LineMoveList moves={moves} hoverable={true}/>
+}
+
+const ResizeTable = ({history, dispatchBoard}) => {
+
+    const [{openings}] = useContext(OpeningsContext);
     const [practiceState, dispatchPractice] = useContext(PracticeContext);
-    const [boardState, dispatchBoard] = useContext(BoardContext);
 
     const [selectedOpeningName, setSelectedOpeningName] = useSyncedLocalStorage('selectedOpening')
     const tableRef = useRef()
 
-    let sortedEntries = Object.values(openings)
-        .sort((a, b) => a.name.localeCompare(b.name))
+    let sortedEntries = openings
 
     if (!selectedOpeningName) {
         sortedEntries = sortedEntries.filter(it =>
+            it.moves.length >= history.length &&
             it.moves.every((it, i) => {
-                const boardMove = boardState.history[i]
+                const boardMove = history[i]
                 return !boardMove || (boardMove?.from === it.from && boardMove?.to === it.to)
             })
         )
     }
 
-    useLayoutEffect(() => {
-        const selectedIndex = sortedEntries.findIndex(it => it.name === selectedOpeningName)
-        if (selectedIndex !== -1) {
-            const timeout = setTimeout(() => {
-                tableRef.current.scrollToRow(selectedIndex)
-            }, 0); // need to wait for the table to fully render
-            return () => clearTimeout(timeout)
-        }
-    }, [])
-
     useEffect(() => {
-        if (openings) {
-            if (selectedOpeningName) {
-                const opening = openings[selectedOpeningName]
-                if (!opening) {
-                    setSelectedOpeningName(null)
-                } else {
-                    dispatchPractice({type: 'SET_OPENING', payload: opening})
-                    dispatchBoard({type: 'SET_MOVES', payload: opening.moves})
-                    dispatchBoard({type: 'SET_ORIENTATION', payload: opening.orientation})
-                }
+        if (openings && selectedOpeningName) {
+            const opening = openings.find(it => it.name === selectedOpeningName)
+            if (!opening) {
+                setSelectedOpeningName(null)
             } else {
-                dispatchPractice({type: 'SET_OPENING', payload: null})
-                dispatchBoard({type: 'SET_MOVES', payload: []})
+                dispatchPractice({type: 'SET_OPENING', payload: opening})
+                dispatchBoard({type: 'SET_MOVES', payload: opening.moves})
+                dispatchBoard({type: 'SET_ORIENTATION', payload: opening.orientation})
             }
         }
     }, [selectedOpeningName])
@@ -104,21 +110,10 @@ const ResizeTable = () => {
         if (selectedOpeningName !== opening.name) {
             setSelectedOpeningName(opening.name)
         } else {
+            dispatchPractice({type: 'SET_OPENING', payload: null})
+            dispatchBoard({type: 'SET_MOVES', payload: []})
             setSelectedOpeningName(null)
         }
-    }
-
-
-    const renderName = ({cellData: name}) => {
-        return (
-            <Grid container alignItems='center'>
-                <Typography>{name}</Typography>
-            </Grid>
-        )
-    }
-
-    const renderMoves = ({cellData: moves}) => {
-        return <LineMoveList moves={moves} hoverable={true}/>
     }
 
     const styles = useStyles()
