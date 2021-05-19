@@ -58,7 +58,7 @@ const NumberScore = ({score}) => {
 
 
 const formatNumber = (centiPawn) => {
-    const value = (centiPawn/100).toFixed(2)
+    const value = (centiPawn / 100).toFixed(2)
     const prefix = centiPawn > 0 ? '+' : ''
     return `${prefix}${value}`
 }

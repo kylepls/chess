@@ -1,26 +1,36 @@
-import {createContext, useReducer} from "react";
+import {useEffect, useReducer} from "react";
+import {createContainer} from "react-tracked";
+import {loadPgn} from "./PgnLoader";
 
 const initialState = {
     openings: null
 }
 
-export const OpeningsContext = createContext(initialState);
-
-export const GeneralContext = ({children}) => {
-    const [state, dispatch] = useReducer(Reducer, initialState);
-
-    return (
-        <OpeningsContext.Provider value={[state, dispatch]}>
-            {children}
-        </OpeningsContext.Provider>
-    )
-}
-
-const Reducer = (state, action) => {
+const reducer = (state, action) => {
     switch (action.type) {
         case 'SET_OPENINGS':
-            return { ...state,  openings: action.payload}
+            return {...state, openings: action.payload}
         default:
             return state;
     }
 }
+
+const useValue = () => {
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    useEffect(() => {
+        loadPgn((openings) => {
+            const sortedEntries = Object.values(openings)
+                .sort((a, b) => a.name.localeCompare(b.name))
+            dispatch({type: 'SET_OPENINGS', payload: sortedEntries})
+        })
+    }, [dispatch])
+
+    return [state, dispatch]
+}
+
+export const {
+    Provider: OpeningsContextProvider,
+    useTrackedState: useOpeningsContext,
+    useUpdate: useOpeningsContextDispatch
+} = createContainer(useValue)

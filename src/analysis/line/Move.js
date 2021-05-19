@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     },
 })
 
-export const Move = ({move, hoverable=true}) => {
+export const Move = ({move, hoverable = true}) => {
     const styles = useStyles();
     const content =
         <Box flex="0" className={styles.move}>

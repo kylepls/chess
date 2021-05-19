@@ -1,4 +1,5 @@
-import {createContext, useReducer} from "react";
+import {useReducer} from "react";
+import {createContainer} from "react-tracked";
 
 const initialState = {
     // eslint-disable-next-line no-eval
@@ -10,19 +11,7 @@ const initialState = {
     lines: []
 }
 
-export const AnalysisContext = createContext(initialState);
-
-export const AnalysisContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(Reducer, initialState);
-
-    return (
-        <AnalysisContext.Provider value={[state, dispatch]}>
-            {children}
-        </AnalysisContext.Provider>
-    )
-}
-
-const Reducer = (state, {type, payload}) => {
+const reducer = (state, {type, payload}) => {
     switch (type) {
         case 'SET_LINES':
             return {...state, lines: payload}
@@ -34,9 +23,7 @@ const Reducer = (state, {type, payload}) => {
                 linesTemp.push({});
             }
 
-            linesTemp[line] = {
-                moves, score, depth
-            }
+            linesTemp[line] = {moves, score, depth}
 
             return {...state, lines: linesTemp}
         case 'CLEAR':
@@ -56,3 +43,11 @@ const Reducer = (state, {type, payload}) => {
             return state;
     }
 }
+
+const useValue = () => useReducer(reducer, initialState)
+
+export const {
+    Provider: AnalysisContextProvider,
+    useTrackedState: useAnalysisContext,
+    useUpdate: useAnalysisContextDispatch
+} = createContainer(useValue)

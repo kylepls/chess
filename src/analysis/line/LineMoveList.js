@@ -1,7 +1,7 @@
 import {Grid} from "@material-ui/core";
 import {Move} from "./Move";
 
-export const LineMoveList = ({moves, hoverable=true}) => {
+export const LineMoveList = ({moves, hoverable = true}) => {
     return (
         <Grid container alignItems="center">
             {moves.map((move, i) =>

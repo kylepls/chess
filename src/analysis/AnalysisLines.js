@@ -1,11 +1,10 @@
-import {useContext} from "react";
-import {AnalysisContext} from "./AnalysisContext";
 import {
     Box,
     LinearProgress,
     makeStyles,
     Table,
-    TableBody, TableCell,
+    TableBody,
+    TableCell,
     TableContainer,
     TableRow,
     Typography
@@ -13,6 +12,7 @@ import {
 import {LineScore} from "./LineScore";
 import {Skeleton} from "@material-ui/lab";
 import {LineMoveList} from "./line/LineMoveList";
+import {useAnalysisContext} from "./AnalysisContext";
 
 // eslint-disable-next-line no-extend-native
 Array.prototype.max = function () {
@@ -38,7 +38,8 @@ const useStyles = makeStyles({
 })
 
 export const AnalysisLines = () => {
-    const [analysisState, _] = useContext(AnalysisContext);
+    const analysisState = useAnalysisContext()
+
     const {lines, depth} = analysisState;
 
     const currentDepth = [...lines.filter(it => it.depth).map(it => it.depth), depth].min();

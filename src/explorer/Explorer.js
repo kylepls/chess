@@ -1,17 +1,8 @@
-import {
-    Box,
-    CircularProgress,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
-} from "@material-ui/core";
+import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {TriBar} from "./Tribar";
-import {BoardContext} from "../board/BoardContext";
+import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
 import {queryLichessExplorer} from "../Lichess";
 import {HoverableMove} from "../hover/HoverableMove";
 
@@ -38,7 +29,8 @@ const useStyles = makeStyles({
 })
 
 export const Explorer = ({fen}) => {
-    const [state, dispatch] = useContext(BoardContext);
+    const state = useBoardContext()
+    const dispatch = useBoardContextDispatch()
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true)
@@ -103,10 +95,8 @@ export const Explorer = ({fen}) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {loading ?
-                <div className={styles.loaderContainer}>
-                    <CircularProgress/>
-                </div>
+            {loading ? // todo
+                <></>
                 : null
             }
         </Box>

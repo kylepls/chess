@@ -1,7 +1,7 @@
-import {useContext, useEffect} from "react";
-import {BoardContext} from "../board/BoardContext";
-import {PracticeContext} from "./PracticeContext";
+import {useEffect} from "react";
+import {usePracticeContext, usePracticeContextDispatch} from "./PracticeContext";
 import {queryLichessExplorer} from "../Lichess";
+import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
 
 const shuffle = arr =>
     arr.map((a) => ({sort: Math.random(), value: a}))
@@ -11,12 +11,14 @@ const shuffle = arr =>
 const cutoff = 20;
 
 export const PracticeController = ({children}) => {
-    const [boardState, dispatchBoard] = useContext(BoardContext);
-    const [practiceState, dispatchPractice] = useContext(PracticeContext);
+    const boardState = useBoardContext()
+    const dispatchBoard = useBoardContextDispatch()
+    const practiceState = usePracticeContext()
+    const dispatchPractice = usePracticeContextDispatch()
 
     useEffect(() => {
         if (practiceState.playing && practiceState.state === 'thinking') {
-            queryLichessExplorer(boardState.chessjs.fen(), data => {
+            queryLichessExplorer(boardState.boardChessjs.fen(), data => {
                 const random = Math.random()
 
                 const top5 = shuffle(data.moves.filter(it => it.total > cutoff).slice(0, 5))

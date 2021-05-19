@@ -1,10 +1,9 @@
-import {memo, useContext, useEffect, useLayoutEffect, useMemo, useRef} from "react";
+import {useEffect, useRef} from "react";
 
-import {OpeningsContext} from "./OpeningsContext";
-import {PracticeContext} from "../PracticeContext";
-import {BoardContext} from "../../board/BoardContext";
+import {useOpeningsContext} from "./OpeningsContext";
+import {usePracticeContextDispatch} from "../PracticeContext";
+import {useBoardContext, useBoardContextDispatch} from "../../board/BoardContext";
 import {LineMoveList} from "../../analysis/line/LineMoveList";
-import {loadPgn} from "./PgnLoader";
 import {useSyncedLocalStorage} from "use-synced-local-storage";
 import 'react-virtualized/styles.css'
 import {Grid, makeStyles, Typography} from "@material-ui/core";
@@ -36,29 +35,12 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const PGNSelector = () => {
-    const [{openings}, dispatchOpening] = useContext(OpeningsContext);
-    const [boardState, dispatchBoard] = useContext(BoardContext);
-
-    useEffect(() => {
-        loadPgn((openings) => {
-            const sortedEntries = Object.values(openings)
-                .sort((a, b) => a.name.localeCompare(b.name))
-            dispatchOpening({type: 'SET_OPENINGS', payload: sortedEntries})
-        })
-    }, [dispatchOpening])
-
+    const {openings} = useOpeningsContext()
     if (!openings) {
         return <Loader/>
     } else {
-        return <MemoResizeTable history={boardState.history.slice(0, boardState.currentMove + 1)}
-                                dispatchBoard={dispatchBoard}
-                                fen={boardState.chessjs.fen()}/>
+        return <ResizeTable/>
     }
-}
-
-const MemoResizeTable = (props) => {
-    // This prevents the history prop from redrawing the table
-    return useMemo(() => (<ResizeTable {...props} />), [props.fen])
 }
 
 const renderName = ({cellData: name}) => {
@@ -73,16 +55,20 @@ const renderMoves = ({cellData: moves}) => {
     return <LineMoveList moves={moves} hoverable={true}/>
 }
 
-const ResizeTable = ({history, dispatchBoard}) => {
+const ResizeTable = () => {
 
-    const [{openings}] = useContext(OpeningsContext);
-    const [practiceState, dispatchPractice] = useContext(PracticeContext);
+    const {openings} = useOpeningsContext()
+
+    const dispatchPractice = usePracticeContextDispatch()
+
+    const boardState = useBoardContext()
+    const dispatchBoard = useBoardContextDispatch()
+    const history = boardState.history.slice(0, boardState.currentMove + 1)
 
     const [selectedOpeningName, setSelectedOpeningName] = useSyncedLocalStorage('selectedOpening')
     const tableRef = useRef()
 
     let sortedEntries = openings
-
     if (!selectedOpeningName) {
         sortedEntries = sortedEntries.filter(it =>
             it.moves.length >= history.length &&
@@ -112,7 +98,12 @@ const ResizeTable = ({history, dispatchBoard}) => {
         } else {
             dispatchPractice({type: 'SET_OPENING', payload: null})
             dispatchBoard({type: 'SET_MOVES', payload: []})
-            setSelectedOpeningName(null)
+
+            // here the opening is set to a bogus value
+            // this will give time for the board to update to reflect the new state
+            // this makes sure that the openings list.length != 1. If this is ever true, the scroll bar position
+            // is reset to the top
+            setSelectedOpeningName('asdf')
         }
     }
 
@@ -155,5 +146,10 @@ const ResizeTable = ({history, dispatchBoard}) => {
 }
 
 const Loader = () => {
-    return <></>
+    return (
+        <></>
+        // <SpinnerOverlayContainer>
+        //     <SpinnerOverlay size={'10vmin'}/>
+        // </SpinnerOverlayContainer>
+    )
 }

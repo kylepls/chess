@@ -569,11 +569,13 @@
 *
 
 [Opening "Scandinavian, Icelandic gambit"]
+[PlayAs "black"]
 
 1. e4 d5 2. exd5 Nf6 3. c4 e6
 *
 
 [Opening "Scandinavian gambit"]
+[PlayAs "black"]
 
 1. e4 d5 2. exd5 Nf6 3. c4 c6
 *
@@ -586,16 +588,19 @@
 *
 
 [Opening "Scandinavian, Marshall variation"]
+[PlayAs "black"]
 
 1. e4 d5 2. exd5 Nf6 3. d4 Nxd5
 *
 
 [Opening "Scandinavian, Kiel variation"]
+[PlayAs "black"]
 
 1. e4 d5 2. exd5 Nf6 3. d4 Nxd5 4. c4 Nb4
 *
 
 [Opening "Scandinavian, Richter variation"]
+[PlayAs "black"]
 
 1. e4 d5 2. exd5 Nf6 3. d4 g6
 *

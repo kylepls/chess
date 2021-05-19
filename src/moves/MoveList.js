@@ -1,6 +1,5 @@
 import {makeStyles, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
-import {useContext} from "react";
-import {BoardContext} from "../board/BoardContext";
+import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
 import {MoveArrows} from "./MoveArrows";
 import {HoverableMove} from "../hover/HoverableMove";
 
@@ -31,7 +30,8 @@ const useStyles = makeStyles({
 
 export const MoveList = () => {
 
-    const [state, dispatch] = useContext(BoardContext);
+    const state = useBoardContext()
+    const dispatch = useBoardContextDispatch()
     const styles = useStyles();
     const content = [];
 

@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useLayoutEffect, useRef} from "react";
-import {BoardContext} from "../board/BoardContext";
+import React, {useEffect, useLayoutEffect, useRef} from "react";
+import {useBoardContextDispatch} from "../board/BoardContext";
 
 let activeHover;
 let timer;
@@ -16,8 +16,8 @@ export const HoverableMove = ({children, move}) => {
         throw new Error('Forgot to supply move')
     }
 
-    const ref = useRef()
-    const [boardState, dispatchBoard] = useContext(BoardContext)
+    const elementRef = useRef()
+    const dispatchBoard = useBoardContextDispatch()
 
     const setTimer = () => {
         clearTimer()
@@ -48,7 +48,7 @@ export const HoverableMove = ({children, move}) => {
     useLayoutEffect(() => {
         // when the component is first loaded, hover events will not fire if the mouse is already over
         window.requestAnimationFrame(() => {
-            if (ref.current.matches(':hover')) {
+            if (elementRef.current && elementRef.current.matches(':hover')) {
                 setHover(true)
             }
         })
@@ -58,7 +58,7 @@ export const HoverableMove = ({children, move}) => {
         return React.cloneElement(child, {
             onMouseLeave: () => setHover(false),
             onMouseEnter: () => setHover(true),
-            ref: ref,
+            ref: elementRef,
             key: child.key || JSON.stringify(move)
         })
     })

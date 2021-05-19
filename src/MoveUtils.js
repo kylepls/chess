@@ -43,6 +43,7 @@ export const getLineMoves = (startFen, moves) => {
 export const makeMoveFromTo = (fen, from, to) => {
     chess.load(fen)
     const res = chess.move({from, to})
+    console.info(from, to, fen)
     return makeMove(res.from, res.to, res.san, chess.fen())
 }
 

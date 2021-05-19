@@ -3,10 +3,9 @@ import {LinearProgress, makeStyles} from "@material-ui/core";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 
-import {useContext} from "react";
-import {PracticeContext} from "./PracticeContext";
+import {usePracticeContext, usePracticeContextDispatch} from "./PracticeContext";
 import CheckIcon from '@material-ui/icons/Check';
-import {BoardContext} from "../board/BoardContext";
+import {useBoardContext} from "../board/BoardContext";
 import {MoveArrows} from "../moves/MoveArrows";
 
 const useStyles = makeStyles({
@@ -35,7 +34,8 @@ const useStyles = makeStyles({
 })
 
 export const PracticeControls = () => {
-    const [practiceState] = useContext(PracticeContext);
+    const practiceState = usePracticeContext()
+
     const playing = practiceState.playing;
     return (
         playing ?
@@ -46,7 +46,8 @@ export const PracticeControls = () => {
 }
 
 const StopButton = () => {
-    const [practiceState, dispatchPractice] = useContext(PracticeContext);
+    const practiceState = usePracticeContext()
+    const dispatchPractice = usePracticeContextDispatch()
 
     const stop = () => dispatchPractice({type: 'STOP'})
     const success = practiceState.state === 'success';
@@ -58,14 +59,17 @@ const StopButton = () => {
                 <LinearProgress/>
                 : null
             }
-            {success ? <CheckIcon /> : <StopIcon/>}
+            {success ? <CheckIcon/> : <StopIcon/>}
         </div>
     )
 }
 
 const PlayButton = () => {
-    const [practiceState, dispatchPractice] = useContext(PracticeContext);
-    const [{orientation}] = useContext(BoardContext)
+    const practiceState = usePracticeContext()
+    const dispatchPractice = usePracticeContextDispatch()
+
+    const {orientation} = useBoardContext()
+
 
     const styles = useStyles();
     if (practiceState.opening) {
@@ -76,6 +80,6 @@ const PlayButton = () => {
             </div>
         )
     } else {
-        return <MoveArrows />
+        return <MoveArrows/>
     }
 }

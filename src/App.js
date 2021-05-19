@@ -6,7 +6,7 @@ import 'chessground/assets/chessground.brown.css'
 import 'chessground/assets/chessground.cburnett.css'
 import {makeStyles} from "@material-ui/styles";
 import {Board} from "./board/Board";
-import {GeneralContext} from "./practice/pgn/OpeningsContext";
+import {OpeningsContextProvider} from "./practice/pgn/OpeningsContext";
 import {Container, createMuiTheme, CssBaseline, Grid, MuiThemeProvider} from "@material-ui/core";
 import {BoardContextProvider} from "./board/BoardContext";
 import {PracticeContextProvider} from "./practice/PracticeContext";
@@ -39,17 +39,17 @@ export const App = () => {
             <CssBaseline/>
             <div className="App">
                 <div className={styles.root}>
-                    <GeneralContext>
+                    <OpeningsContextProvider>
                         <BoardContextProvider>
                             <AnalysisContextProvider>
                                 <PracticeContextProvider>
                                     <AnalysisController>
-                                            <AppArea key={0}/>
+                                        <AppArea key={0}/>
                                     </AnalysisController>
                                 </PracticeContextProvider>
                             </AnalysisContextProvider>
                         </BoardContextProvider>
-                    </GeneralContext>
+                    </OpeningsContextProvider>
                 </div>
             </div>
         </MuiThemeProvider>

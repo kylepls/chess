@@ -1,6 +1,6 @@
-import {useContext, useEffect, useRef} from "react";
-import {AnalysisContext} from "./AnalysisContext";
-import {BoardContext} from "../board/BoardContext";
+import {useEffect, useRef} from "react";
+import {useAnalysisContext, useAnalysisContextDispatch} from "./AnalysisContext";
+import {useBoardContext} from "../board/BoardContext";
 import Chess from 'chess.js'
 import UCI from "./UCI";
 import {getLineMoves} from "../MoveUtils"
@@ -10,12 +10,13 @@ const chessjs = new Chess();
 
 export const AnalysisController = ({children}) => {
 
-    const [boardState] = useContext(BoardContext);
-    const [analysisState, dispatchAnalysis] = useContext(AnalysisContext);
+    const boardState = useBoardContext()
+    const analysisState = useAnalysisContext()
+    const dispatchAnalysis = useAnalysisContextDispatch()
 
     const uci = useRef(new UCI(analysisState.engine)).current;
 
-    const viewFen = boardState.boardChessjs.fen();
+    const viewFen = boardState.displayFen
     const {engine, run, depth, linesCount} = analysisState;
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export const AnalysisController = ({children}) => {
 
             const fixLines = (lines) => {
                 return lines.map(line => {
-                    const startFen = boardState.boardChessjs.fen();
+                    const startFen = boardState.displayFen
                     return {...line, moves: getLineMoves(startFen, (line?.moves || []))}
                 })
             }
@@ -38,7 +39,7 @@ export const AnalysisController = ({children}) => {
                 .then(() => uci.isReady())
                 .then(() => uci.setPosition(viewFen))
                 .then(() => uci.eval())
-                .then (evaluation => {
+                .then(evaluation => {
                     dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
                 })
                 .then(() => {
@@ -73,7 +74,7 @@ export const AnalysisController = ({children}) => {
                     .filter(it => it.moves.length > 0)
                     .map(it => {
                         const move = it.moves[0];
-                        chessjs.load(boardState.boardChessjs.fen());
+                        chessjs.load(boardState.displayFen);
                         const chessMove = chessjs.move(move);
                         if (chessMove) {
                             const {from, to} = chessMove;

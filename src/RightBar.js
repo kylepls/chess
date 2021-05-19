@@ -1,12 +1,12 @@
-import {Box, Grid, makeStyles, Paper, Tab} from "@material-ui/core";
+import {Grid, makeStyles, Paper, Tab} from "@material-ui/core";
 import {TabContext, TabList, TabPanel} from "@material-ui/lab";
 import {PracticeTab} from "./practice/PracticeTab";
 import {AnalysisTab} from "./analysis/AnalysisTab";
-import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
-import {BoardContext} from "./board/BoardContext";
-import {AnalysisContext} from "./analysis/AnalysisContext";
+import React, {useEffect, useLayoutEffect, useRef} from "react";
 import {ExplorerTab} from "./explorer/ExplorerTab";
 import {useSyncedLocalStorage} from "use-synced-local-storage";
+import {useAnalysisContextDispatch} from "./analysis/AnalysisContext";
+import {useForceUpdate} from "./utils/ForceUpdate";
 
 const useStyles = makeStyles({
     tabList: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 export const RightBar = () => {
 
     const [tab, setTab] = useSyncedLocalStorage('tab', 'explorer')
-    const [analysisState, dispatchAnalysis] = useContext(AnalysisContext);
+    const dispatchAnalysis = useAnalysisContextDispatch()
 
     const tabListRef = useRef()
 
@@ -29,7 +29,12 @@ export const RightBar = () => {
         dispatchAnalysis({type: 'SET_RUN', payload: run})
     }, [tab])
 
+    const update = useForceUpdate()
     const headerHeight = tabListRef.current?.offsetHeight || 0
+    useLayoutEffect(() => {
+        // re-render after layout is completed to force the headerHeight to be applied correctly
+        update()
+    }, [])
 
     const styles = useStyles();
     return (

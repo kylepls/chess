@@ -1,5 +1,4 @@
-import {useContext} from "react";
-import {BoardContext} from "../board/BoardContext";
+import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
 
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
@@ -8,7 +7,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
 import {Box, Grid, makeStyles, Typography} from "@material-ui/core";
-import {AnalysisContext} from "../analysis/AnalysisContext";
+import {useAnalysisContext} from "../analysis/AnalysisContext";
 
 import LoopIcon from '@material-ui/icons/Loop'
 
@@ -40,8 +39,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const MoveArrows = () => {
-    const [boardState, dispatchBoard] = useContext(BoardContext);
-    const [analysisState, dispatchAnalysis] = useContext(AnalysisContext)
+    const dispatchBoard = useBoardContextDispatch()
+    const analysisState = useAnalysisContext()
 
     const scoreString = analysisState.evaluation?.score?.formatted || '--'
 
@@ -74,7 +73,9 @@ export const MoveArrows = () => {
 }
 
 const MoveControls = () => {
-    const [boardState, dispatchBoard] = useContext(BoardContext);
+    const boardState = useBoardContext()
+    const dispatchBoard = useBoardContextDispatch()
+
 
     const start = () => dispatchBoard({type: 'FIRST_MOVE'})
     const previous = () => dispatchBoard({type: 'PREVIOUS_MOVE'})

@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useLayoutEffect, useRef} from "react";
+import React, {useEffect, useLayoutEffect, useRef} from "react";
 import {Chessground} from "chessground";
 import {makeStyles} from "@material-ui/styles";
 
-import {BoardContext} from "./BoardContext";
+import {useBoardContext, useBoardContextDispatch} from "./BoardContext";
 import {makeMoveFromTo} from "../MoveUtils";
 import Chess from 'chess.js'
 import transitions from "@material-ui/core/styles/transitions";
@@ -46,7 +46,7 @@ const validMoves = (chess) => {
         .reduce((result, [s, moves]) => result.set(s, moves.map(move => move.to)), new Map());
 }
 
-export const cgLoad = (cg, chessJs, lastMove) => {
+const cgLoad = (cg, chessJs, lastMove) => {
     const turnColor = (chessJs.turn() === 'w') ? 'white' : 'black';
     const fen = chessJs.fen();
     const check = chessJs.in_check();
@@ -68,17 +68,16 @@ export const cgLoad = (cg, chessJs, lastMove) => {
 }
 
 export const Board = () => {
-    const [state, dispatch] = useContext(BoardContext);
+    const state = useBoardContext()
+    const dispatch = useBoardContextDispatch()
 
     const divRef = useRef();
     const cgRef = useRef();
 
-    const displayFen = state.boardChessjs.fen()
-
     useEffect(() => {
         const {boardChessjs, currentMove} = state;
         if (!state.ghost) {
-            const history = state.history.slice(0, currentMove+1)
+            const history = state.history.slice(0, currentMove + 1)
             const lastMove = history.length > 0 ? history.slice(-1)[0] : null;
             cgLoad(cgRef.current, boardChessjs, lastMove)
         } else {
@@ -86,7 +85,7 @@ export const Board = () => {
             const chess = Chess(move.fen)
             cgLoad(cgRef.current, chess, {from: move.from, to: move.to})
         }
-    }, [displayFen, state.orientation, state.ghost]);
+    }, [state.displayFen, state.orientation, state.ghost]);
 
     useLayoutEffect(() => {
         cgRef.current = Chessground(divRef.current, {

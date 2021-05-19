@@ -83,7 +83,7 @@ export default class UCI {
                 if (info.hasOwnProperty('bestMove')) {
                     return resolve(message);
                 } else {
-                    lines[info.lineNumber-1] = info;
+                    lines[info.lineNumber - 1] = info;
                     linesFunction([...lines])
                 }
             })

@@ -1,4 +1,5 @@
-import {createContext, useReducer} from "react";
+import {useReducer} from "react";
+import {createContainer} from "react-tracked";
 
 const initialState = {
     opening: undefined,
@@ -7,19 +8,7 @@ const initialState = {
     state: 'stopped'
 }
 
-export const PracticeContext = createContext(initialState);
-
-export const PracticeContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(Reducer, initialState);
-
-    return (
-        <PracticeContext.Provider value={[state, dispatch]}>
-            {children}
-        </PracticeContext.Provider>
-    )
-}
-
-const Reducer = (state, {type, payload}) => {
+const reducer = (state, {type, payload}) => {
     switch (type) {
         case 'PLAY':
             if (!state.opening) throw new Error("Play requires opening to be selected")
@@ -47,3 +36,11 @@ const Reducer = (state, {type, payload}) => {
             return state;
     }
 }
+
+const useValue = () => useReducer(reducer, initialState)
+
+export const {
+    Provider: PracticeContextProvider,
+    useTrackedState: usePracticeContext,
+    useUpdate: usePracticeContextDispatch
+} = createContainer(useValue)
