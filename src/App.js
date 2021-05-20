@@ -1,39 +1,39 @@
-import React from 'react';
-import './App.css';
+import {Container, createMuiTheme, CssBaseline, Grid, MuiThemeProvider} from '@material-ui/core'
+import {makeStyles} from '@material-ui/styles'
+import {AnalysisContextProvider} from 'analysis/AnalysisContext'
+import {AnalysisController} from 'analysis/AnalysisController'
+import 'App.css'
+import {Board} from 'board/Board'
+import {BoardContextProvider} from 'board/BoardContext'
 
 import 'chessground/assets/chessground.base.css'
 import 'chessground/assets/chessground.brown.css'
 import 'chessground/assets/chessground.cburnett.css'
-import {makeStyles} from "@material-ui/styles";
-import {Board} from "./board/Board";
-import {OpeningsContextProvider} from "./practice/pgn/OpeningsContext";
-import {Container, createMuiTheme, CssBaseline, Grid, MuiThemeProvider} from "@material-ui/core";
-import {BoardContextProvider} from "./board/BoardContext";
-import {PracticeContextProvider} from "./practice/PracticeContext";
-import {AnalysisContextProvider} from "./analysis/AnalysisContext";
-import {AnalysisController} from "./analysis/AnalysisController";
-import {RightBar} from "./RightBar";
+import {OpeningsContextProvider} from 'practice/pgn/OpeningsContext'
+import {PracticeContextProvider} from 'practice/PracticeContext'
+import React from 'react'
+import {RightBar} from 'RightBar'
 
 const useStyles = makeStyles({
     root: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     appArea: {
-        maxWidth: "85vw",
-        height: "90%",
+        maxWidth: '85vw',
+        height: '90%',
     },
-});
+})
 
 const theme = createMuiTheme({
     palette: {
-        type: 'dark'
-    }
+        type: 'dark',
+    },
 })
 
 export const App = () => {
-    const styles = useStyles();
+    const styles = useStyles()
     return (
         <MuiThemeProvider theme={theme}>
             <CssBaseline/>
@@ -53,11 +53,11 @@ export const App = () => {
                 </div>
             </div>
         </MuiThemeProvider>
-    );
+    )
 }
 
 const AppArea = () => {
-    const styles = useStyles();
+    const styles = useStyles()
     return (
         <Container className={styles.appArea}>
             <Grid container>
@@ -72,4 +72,4 @@ const AppArea = () => {
     )
 }
 
-export default App;
+export default App

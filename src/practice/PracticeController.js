@@ -1,14 +1,14 @@
-import {useEffect} from "react";
-import {usePracticeContext, usePracticeContextDispatch} from "./PracticeContext";
-import {queryLichessExplorer} from "../Lichess";
-import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
+import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
+import {queryLichessExplorer} from 'Lichess'
+import {usePracticeContext, usePracticeContextDispatch} from 'practice/PracticeContext'
+import {useEffect} from 'react'
 
 const shuffle = arr =>
     arr.map((a) => ({sort: Math.random(), value: a}))
         .sort((a, b) => a.sort - b.sort)
         .map((a) => a.value)
 
-const cutoff = 20;
+const cutoff = 20
 
 export const PracticeController = ({children}) => {
     const boardState = useBoardContext()
@@ -35,14 +35,14 @@ export const PracticeController = ({children}) => {
                         i++
                     }
 
-                    const move = selection;
+                    const move = selection
                     setTimeout(() => {
                         dispatchBoard({type: 'MOVE', payload: move})
                         dispatchPractice({type: 'SET_STATE', payload: 'waiting'})
-                    }, 500);
+                    }, 500)
                 } else {
                     // completed a line, reset
-                    const opening = practiceState.opening;
+                    const opening = practiceState.opening
                     setTimeout(() => {
                         dispatchBoard({type: 'SET_MOVES', payload: opening.moves})
                         dispatchPractice({type: 'PLAY_AGAIN'})
@@ -51,14 +51,14 @@ export const PracticeController = ({children}) => {
                 }
             })
         }
-    }, [practiceState.state]);
+    }, [practiceState.state])
 
     useEffect(() => {
-        const turn = boardState.boardChessjs.turn() === 'w' ? 'white' : 'black';
+        const turn = boardState.boardChessjs.turn() === 'w' ? 'white' : 'black'
         if (practiceState.playing && boardState.orientation !== turn) {
             dispatchPractice({type: 'SET_STATE', payload: 'thinking'})
         }
-    }, [boardState.playerMove]);
+    }, [boardState.playerMove])
 
     return <>{children}</>
 }

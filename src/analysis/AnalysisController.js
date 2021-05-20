@@ -1,12 +1,12 @@
-import {useEffect, useRef} from "react";
-import {useAnalysisContext, useAnalysisContextDispatch} from "./AnalysisContext";
-import {useBoardContext} from "../board/BoardContext";
+import {useAnalysisContext, useAnalysisContextDispatch} from 'analysis/AnalysisContext'
+import {parseScore} from 'analysis/ScoreFormat'
+import UCI from 'analysis/uci/UCI'
+import {useBoardContext} from 'board/BoardContext'
 import Chess from 'chess.js'
-import UCI from "./UCI";
-import {getLineMoves} from "../MoveUtils"
-import {parseScore} from "./ScoreFormat";
+import {getLineMoves} from 'MoveUtils'
+import {useEffect, useRef} from 'react'
 
-const chessjs = new Chess();
+const chessjs = new Chess()
 
 export const AnalysisController = ({children}) => {
 
@@ -14,10 +14,10 @@ export const AnalysisController = ({children}) => {
     const analysisState = useAnalysisContext()
     const dispatchAnalysis = useAnalysisContextDispatch()
 
-    const uci = useRef(new UCI(analysisState.engine)).current;
+    const uci = useRef(new UCI(analysisState.engine)).current
 
     const viewFen = boardState.displayFen
-    const {engine, run, depth, linesCount} = analysisState;
+    const {engine, run, depth, linesCount} = analysisState
 
     useEffect(() => {
         if (!run) uci.postStop()
@@ -66,18 +66,18 @@ export const AnalysisController = ({children}) => {
         engine.postMessage(`go depth ${depth}`)
     }, [depth])
 
-    const lines = analysisState.lines;
+    const lines = analysisState.lines
     useEffect(() => {
         if (run && !boardState.ghost) {
             if (lines && lines.length > 0) {
                 const shapes = lines
                     .filter(it => it.moves.length > 0)
                     .map(it => {
-                        const move = it.moves[0];
-                        chessjs.load(boardState.displayFen);
-                        const chessMove = chessjs.move(move);
+                        const move = it.moves[0]
+                        chessjs.load(boardState.displayFen)
+                        const chessMove = chessjs.move(move)
                         if (chessMove) {
-                            const {from, to} = chessMove;
+                            const {from, to} = chessMove
                             return {
                                 analysis: true,
                                 orig: from,
@@ -85,19 +85,19 @@ export const AnalysisController = ({children}) => {
                                 brush: 'red',
                                 mouseSq: to,
                                 snapToValidMove: true,
-                                pos: [600, 700]
+                                pos: [600, 700],
                             }
                         } else {
                             return null
                         }
                     })
                     .filter(it => it !== null)
-                const otherShapes = boardState.cg.state.drawable.autoShapes.filter(it => !it.hasOwnProperty('analysis'));
-                boardState.cg.setAutoShapes([...otherShapes, ...shapes]);
+                const otherShapes = boardState.cg.state.drawable.autoShapes.filter(it => !it.hasOwnProperty('analysis'))
+                boardState.cg.setAutoShapes([...otherShapes, ...shapes])
             }
         } else if (boardState?.cg?.state?.drawable?.autoShapes) {
-            const otherShapes = boardState.cg.state.drawable.autoShapes.filter(it => !it.hasOwnProperty('analysis'));
-            boardState.cg.setAutoShapes(otherShapes);
+            const otherShapes = boardState.cg.state.drawable.autoShapes.filter(it => !it.hasOwnProperty('analysis'))
+            boardState.cg.setAutoShapes(otherShapes)
         }
     }, [lines, boardState.ghost])
 
@@ -106,6 +106,6 @@ export const AnalysisController = ({children}) => {
 
 const mapEvaluation = (evaluation) => {
     return {
-        score: parseScore(evaluation.evaluation)
+        score: parseScore(evaluation.evaluation),
     }
 }

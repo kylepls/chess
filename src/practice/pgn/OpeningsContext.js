@@ -1,9 +1,9 @@
-import {useEffect, useReducer} from "react";
-import {createContainer} from "react-tracked";
-import {loadPgn} from "./PgnLoader";
+import {loadPgn} from 'practice/pgn/PgnLoader'
+import {useEffect, useReducer} from 'react'
+import {createContainer} from 'react-tracked'
 
 const initialState = {
-    openings: null
+    openings: null,
 }
 
 const reducer = (state, action) => {
@@ -11,7 +11,7 @@ const reducer = (state, action) => {
         case 'SET_OPENINGS':
             return {...state, openings: action.payload}
         default:
-            return state;
+            return state
     }
 }
 
@@ -32,5 +32,5 @@ const useValue = () => {
 export const {
     Provider: OpeningsContextProvider,
     useTrackedState: useOpeningsContext,
-    useUpdate: useOpeningsContextDispatch
+    useUpdate: useOpeningsContextDispatch,
 } = createContainer(useValue)

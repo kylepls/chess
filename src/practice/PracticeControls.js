@@ -1,42 +1,42 @@
-import {LinearProgress, makeStyles} from "@material-ui/core";
+import {LinearProgress, makeStyles} from '@material-ui/core'
+import CheckIcon from '@material-ui/icons/Check'
 
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import StopIcon from '@material-ui/icons/Stop';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import StopIcon from '@material-ui/icons/Stop'
+import {useBoardContext} from 'board/BoardContext'
+import {MoveArrows} from 'moves/MoveArrows'
 
-import {usePracticeContext, usePracticeContextDispatch} from "./PracticeContext";
-import CheckIcon from '@material-ui/icons/Check';
-import {useBoardContext} from "../board/BoardContext";
-import {MoveArrows} from "../moves/MoveArrows";
+import {usePracticeContext, usePracticeContextDispatch} from 'practice/PracticeContext'
 
 const useStyles = makeStyles({
     play: {
         cursor: 'pointer',
         background: 'rgba(172,255,18,0.25)',
-        display: "flex",
-        justifyContent: "center",
+        display: 'flex',
+        justifyContent: 'center',
         '& svg': {
             flex: 1,
-            height: 'auto'
-        }
+            height: 'auto',
+        },
     },
     stop: {
         cursor: 'pointer',
         background: 'rgba(255,18,18,0.25)',
-        display: "flex",
-        justifyContent: "center",
+        display: 'flex',
+        justifyContent: 'center',
         flexDirection: 'column',
         '& svg': {
             flex: 1,
             height: 'auto',
-            width: 'auto'
-        }
-    }
+            width: 'auto',
+        },
+    },
 })
 
 export const PracticeControls = () => {
     const practiceState = usePracticeContext()
 
-    const playing = practiceState.playing;
+    const playing = practiceState.playing
     return (
         playing ?
             <StopButton/>
@@ -50,9 +50,9 @@ const StopButton = () => {
     const dispatchPractice = usePracticeContextDispatch()
 
     const stop = () => dispatchPractice({type: 'STOP'})
-    const success = practiceState.state === 'success';
+    const success = practiceState.state === 'success'
 
-    const styles = useStyles();
+    const styles = useStyles()
     return (
         <div className={styles.stop} onClick={stop}>
             {practiceState.state === 'thinking' ?
@@ -71,7 +71,7 @@ const PlayButton = () => {
     const {orientation} = useBoardContext()
 
 
-    const styles = useStyles();
+    const styles = useStyles()
     if (practiceState.opening) {
         const play = () => dispatchPractice({type: 'PLAY', payload: orientation})
         return (

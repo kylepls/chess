@@ -1,37 +1,36 @@
-import {useEffect, useRef} from "react";
+import {Grid, makeStyles, Typography} from '@material-ui/core'
+import {LineMoveList} from 'analysis/line/LineMoveList'
+import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 
-import {useOpeningsContext} from "./OpeningsContext";
-import {usePracticeContextDispatch} from "../PracticeContext";
-import {useBoardContext, useBoardContextDispatch} from "../../board/BoardContext";
-import {LineMoveList} from "../../analysis/line/LineMoveList";
-import {useSyncedLocalStorage} from "use-synced-local-storage";
+import {useOpeningsContext} from 'practice/pgn/OpeningsContext'
+import {usePracticeContextDispatch} from 'practice/PracticeContext'
+import {useEffect, useLayoutEffect, useRef} from 'react'
+import {AutoSizer, Column, Table} from 'react-virtualized'
 import 'react-virtualized/styles.css'
-import {Grid, makeStyles, Typography} from "@material-ui/core";
-import {AutoSizer, Column, Table} from "react-virtualized";
+import {useSyncedLocalStorage} from 'use-synced-local-storage'
 
 const useStyles = makeStyles(theme => ({
-    openingName: {},
     row: {
         borderBottomColor: 'rgb(128,128,128, 0.4)',
         boxSizing: 'border-box',
         borderBottom: '1px solid',
         cursor: 'pointer',
         '&:hover': {
-            background: theme.palette.action.hover
+            background: theme.palette.action.hover,
         },
         '&:active': {
-            background: theme.palette.primary.dark
-        }
+            background: theme.palette.primary.dark,
+        },
     },
     selected: {
         background: theme.palette.primary.light,
         '&:hover': {
-            background: theme.palette.primary.main
+            background: theme.palette.primary.main,
         },
         '&:active': {
-            background: theme.palette.primary.dark
-        }
-    }
+            background: theme.palette.primary.dark,
+        },
+    },
 }))
 
 export const PGNSelector = () => {
@@ -45,7 +44,7 @@ export const PGNSelector = () => {
 
 const renderName = ({cellData: name}) => {
     return (
-        <Grid container alignItems='center'>
+        <Grid container alignItems="center">
             <Typography>{name}</Typography>
         </Grid>
     )
@@ -75,7 +74,7 @@ const ResizeTable = () => {
             it.moves.every((it, i) => {
                 const boardMove = history[i]
                 return !boardMove || (boardMove?.from === it.from && boardMove?.to === it.to)
-            })
+            }),
         )
     }
 
@@ -117,6 +116,15 @@ const ResizeTable = () => {
         }
     }
 
+    useLayoutEffect(() => {
+        const selectedIndex = openings.findIndex(it => it.name === selectedOpeningName)
+        if (selectedIndex !== -1) {
+            window.requestAnimationFrame(() => {
+                tableRef.current.scrollToRow(selectedIndex)
+            })
+        }
+    }, [openings])
+
     return (
         <AutoSizer>
             {({width, height}) =>
@@ -132,13 +140,13 @@ const ResizeTable = () => {
                     rowClassName={rowClass}
                 >
                     <Column
-                        label='Name'
-                        dataKey='name'
+                        label="Name"
+                        dataKey="name"
                         width={width * 0.6}
                         cellRenderer={renderName}
                         className={styles.openingName}
                     />
-                    <Column label='Moves' dataKey='moves' width={width * 0.4} cellRenderer={renderMoves}/>
+                    <Column label="Moves" dataKey="moves" width={width * 0.4} cellRenderer={renderMoves}/>
                 </Table>
             }
         </AutoSizer>

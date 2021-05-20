@@ -1,5 +1,5 @@
-import {HoverableMove} from "../../hover/HoverableMove";
-import {Box, makeStyles, Paper} from "@material-ui/core";
+import {Box, makeStyles, Paper} from '@material-ui/core'
+import {HoverableMove} from 'hover/HoverableMove'
 
 const useStyles = makeStyles({
     move: {
@@ -11,12 +11,12 @@ const useStyles = makeStyles({
     },
     movePaper: {
         margin: '0.3em',
-        cursor: 'pointer'
+        cursor: 'pointer',
     },
 })
 
 export const Move = ({move, hoverable = true}) => {
-    const styles = useStyles();
+    const styles = useStyles()
     const content =
         <Box flex="0" className={styles.move}>
             <Paper className={styles.movePaper}>

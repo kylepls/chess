@@ -1,12 +1,12 @@
-import {VerticalSplit} from "../split/Splitter";
-import {MoveList} from "../moves/MoveList";
-import React from "react";
-import {PGNSelector} from "./pgn/PGNSelector";
-import {Explorer} from "../explorer/Explorer";
-import {PracticeControls} from "./PracticeControls";
-import {usePracticeContext} from "./PracticeContext";
-import {PracticeController} from "./PracticeController";
-import {useBoardContext} from "../board/BoardContext";
+import {useBoardContext} from 'board/BoardContext'
+import {Explorer} from 'explorer/Explorer'
+import {MoveList} from 'moves/MoveList'
+import {PGNSelector} from 'practice/pgn/PGNSelector'
+import {usePracticeContext} from 'practice/PracticeContext'
+import {PracticeController} from 'practice/PracticeController'
+import {PracticeControls} from 'practice/PracticeControls'
+import React from 'react'
+import {VerticalSplit} from 'split/Splitter'
 
 export const PracticeTab = () => {
     const practiceState = usePracticeContext()
@@ -28,5 +28,5 @@ export const PracticeTab = () => {
                 </VerticalSplit>
             }
         </PracticeController>
-    );
+    )
 }

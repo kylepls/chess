@@ -7,42 +7,42 @@ import {
     TableCell,
     TableContainer,
     TableRow,
-    Typography
-} from "@material-ui/core";
-import {LineScore} from "./LineScore";
-import {Skeleton} from "@material-ui/lab";
-import {LineMoveList} from "./line/LineMoveList";
-import {useAnalysisContext} from "./AnalysisContext";
+    Typography,
+} from '@material-ui/core'
+import {Skeleton} from '@material-ui/lab'
+import {useAnalysisContext} from 'analysis/AnalysisContext'
+import {LineMoveList} from 'analysis/line/LineMoveList'
+import {LineScore} from 'analysis/LineScore'
 
 // eslint-disable-next-line no-extend-native
 Array.prototype.max = function () {
-    return Math.max.apply(null, this);
-};
+    return Math.max.apply(null, this)
+}
 
 // eslint-disable-next-line no-extend-native
 Array.prototype.min = function () {
-    return Math.min.apply(null, this);
-};
+    return Math.min.apply(null, this)
+}
 
 const useStyles = makeStyles({
     line: {
-        height: "auto"
+        height: 'auto',
     },
     box: {
-        width: "auto",
-        height: "auto"
+        width: 'auto',
+        height: 'auto',
     },
     text: {
-        width: "fit-content"
+        width: 'fit-content',
     },
 })
 
 export const AnalysisLines = () => {
     const analysisState = useAnalysisContext()
 
-    const {lines, depth} = analysisState;
+    const {lines, depth} = analysisState
 
-    const currentDepth = [...lines.filter(it => it.depth).map(it => it.depth), depth].min();
+    const currentDepth = [...lines.filter(it => it.depth).map(it => it.depth), depth].min()
 
     return (
         <TableContainer>
@@ -77,11 +77,11 @@ const Line = ({moves, score}) => {
 }
 
 const LinearProgressWithLabel = (props) => {
-    const displayValue = props.displayValue;
-    const passProps = {...props};
+    const displayValue = props.displayValue
+    const passProps = {...props}
     delete passProps['displayValue']
 
-    const styles = useStyles();
+    const styles = useStyles()
     return (
         <Box className={styles.box} display="flex" alignItems="center" justifyContent="center" alignContent="center">
             <Box className={null} width="100%" mr={1}>
@@ -91,5 +91,5 @@ const LinearProgressWithLabel = (props) => {
                 <Typography className={styles.text} variant="h6" color="textSecondary">{displayValue}</Typography>
             </Box>
         </Box>
-    );
+    )
 }

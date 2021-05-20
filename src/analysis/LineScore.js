@@ -1,12 +1,13 @@
-import {Box, makeStyles} from "@material-ui/core";
-import {Style} from "../Style";
+import {Box, makeStyles} from '@material-ui/core'
+// TODO use theme
+import {Style} from 'Style'
 
 const useStyles = makeStyles({
     numericScore: ({score}) => ({
         borderRadius: '0.2em',
         width: '3.5em',
         height: '1.5em',
-        ...getCss(score)
+        ...getCss(score),
     }),
 })
 
@@ -40,7 +41,7 @@ export const LineScore = ({score}) => {
 }
 
 const NumberScore = ({score}) => {
-    const styles = useStyles({score});
+    const styles = useStyles({score})
 
     const value = formatNumber(score)
 

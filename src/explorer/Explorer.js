@@ -1,65 +1,65 @@
-import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import {makeStyles} from "@material-ui/styles";
-import React, {useEffect, useState} from "react";
-import {TriBar} from "./Tribar";
-import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
-import {queryLichessExplorer} from "../Lichess";
-import {HoverableMove} from "../hover/HoverableMove";
+import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core'
+import {makeStyles} from '@material-ui/styles'
+import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
+import {TriBar} from 'explorer/Tribar'
+import {HoverableMove} from 'hover/HoverableMove'
+import {queryLichessExplorer} from 'Lichess'
+import React, {useEffect, useState} from 'react'
 
 const useStyles = makeStyles({
     row: {
         cursor: 'pointer',
         '&:hover': {
-            background: '#aaa'
-        }
+            background: '#aaa',
+        },
     },
     loaderContainer: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         position: 'absolute',
         left: '0',
         top: '0',
         zIndex: 999,
-        background: 'rgb(66,66,66, 0.6)'
+        background: 'rgb(66,66,66, 0.6)',
     },
     active: {
-        backgroundColor: '#aaa'
-    }
+        backgroundColor: '#aaa',
+    },
 })
 
 export const Explorer = ({fen}) => {
     const state = useBoardContext()
     const dispatch = useBoardContextDispatch()
 
-    const [data, setData] = useState();
+    const [data, setData] = useState()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        setLoading(true);
+        setLoading(true)
         queryLichessExplorer(fen, data => {
-            setData(data);
+            setData(data)
             setLoading(false)
-        });
+        })
     }, [fen])
 
     const makeMove = move => {
-        const san = move.san;
-        dispatch({type: 'MOVE', payload: move});
+        const san = move.san
+        dispatch({type: 'MOVE', payload: move})
         dispatch({type: 'PLAYER_MOVE', payload: san})
     }
 
     const activeRowCss = move => {
-        const history = state.history;
-        const nextMoveIndex = state.currentMove + 1;
+        const history = state.history
+        const nextMoveIndex = state.currentMove + 1
         if (nextMoveIndex < history.length) {
-            const playedMove = history[nextMoveIndex];
-            return playedMove === move.san ? styles.active : null;
+            const playedMove = history[nextMoveIndex]
+            return playedMove === move.san ? styles.active : null
         }
-        return null;
+        return null
     }
 
-    const styles = useStyles();
+    const styles = useStyles()
     return (
         <Box position="relative">
             <TableContainer>
@@ -88,7 +88,7 @@ export const Explorer = ({fen}) => {
                                             <TriBar {...move} />
                                         </TableCell>
                                     </TableRow>
-                                </HoverableMove>
+                                </HoverableMove>,
                             )
                             : null
                         }

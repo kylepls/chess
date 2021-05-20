@@ -1,8 +1,8 @@
-import {VerticalSplit} from "../split/Splitter";
-import {MoveList} from "../moves/MoveList";
-import {Explorer} from "./Explorer";
-import React from "react";
-import {useBoardContext} from "../board/BoardContext";
+import {useBoardContext} from 'board/BoardContext'
+import {Explorer} from 'explorer/Explorer'
+import {MoveList} from 'moves/MoveList'
+import React from 'react'
+import {VerticalSplit} from 'split/Splitter'
 
 export const ExplorerTab = () => {
 

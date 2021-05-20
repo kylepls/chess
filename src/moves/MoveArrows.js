@@ -1,41 +1,40 @@
-import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
+import {Box, Grid, makeStyles, Typography} from '@material-ui/core'
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
 
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-
-import {Box, Grid, makeStyles, Typography} from "@material-ui/core";
-import {useAnalysisContext} from "../analysis/AnalysisContext";
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 
 import LoopIcon from '@material-ui/icons/Loop'
+import SkipNextIcon from '@material-ui/icons/SkipNext'
+
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
+import {useAnalysisContext} from 'analysis/AnalysisContext'
+import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 
 const useStyles = makeStyles(theme => ({
     root: {
         '& svg': {
             height: '100%',
-            width: 'auto'
+            width: 'auto',
         },
         '& svg:hover': {
             cursor: 'pointer',
-            background: '#ccc'
+            background: '#ccc',
         },
-        background: theme.palette.background.default
+        background: theme.palette.background.default,
     },
     score: {
         height: 'fit-content',
         textAlign: 'center',
         '& p': {
             fontWeight: 900,
-            fontSize: '20px'
-        }
+            fontSize: '20px',
+        },
     },
     flip: {
         cursor: 'pointer',
         alignSelf: 'center',
-        width: 'auto'
-    }
+        width: 'auto',
+    },
 }))
 
 export const MoveArrows = () => {
@@ -48,7 +47,7 @@ export const MoveArrows = () => {
         dispatchBoard({type: 'FLIP_ORIENTATION'})
     }
 
-    const styles = useStyles();
+    const styles = useStyles()
     return (
         <Grid container className={styles.root} justify="center">
             <Grid item xs={1}>

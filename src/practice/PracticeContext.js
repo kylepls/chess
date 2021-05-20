@@ -1,23 +1,23 @@
-import {useReducer} from "react";
-import {createContainer} from "react-tracked";
+import {useReducer} from 'react'
+import {createContainer} from 'react-tracked'
 
 const initialState = {
     opening: undefined,
     playing: false,
     side: undefined,
-    state: 'stopped'
+    state: 'stopped',
 }
 
 const reducer = (state, {type, payload}) => {
     switch (type) {
         case 'PLAY':
-            if (!state.opening) throw new Error("Play requires opening to be selected")
+            if (!state.opening) throw new Error('Play requires opening to be selected')
             const s = payload === state.opening.toMove ? 'waiting' : 'thinking'
             return {
                 ...state,
                 playing: true,
                 state: s,
-                side: payload
+                side: payload,
             }
         case 'PLAY_AGAIN':
             const st = state.side === state.opening.toMove ? 'waiting' : 'thinking'
@@ -33,7 +33,7 @@ const reducer = (state, {type, payload}) => {
         case 'SET_OPENING':
             return {...state, opening: payload, playing: false, waitingForMove: false}
         default:
-            return state;
+            return state
     }
 }
 
@@ -42,5 +42,5 @@ const useValue = () => useReducer(reducer, initialState)
 export const {
     Provider: PracticeContextProvider,
     useTrackedState: usePracticeContext,
-    useUpdate: usePracticeContextDispatch
+    useUpdate: usePracticeContextDispatch,
 } = createContainer(useValue)

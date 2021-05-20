@@ -1,9 +1,9 @@
-import React, {useEffect, useLayoutEffect, useRef} from "react";
-import {useBoardContextDispatch} from "../board/BoardContext";
+import {useBoardContextDispatch} from 'board/BoardContext'
+import React, {useEffect, useLayoutEffect, useRef} from 'react'
 
-let activeHover;
-let timer;
-const timeout = 100;
+let activeHover
+let timer
+const timeout = 100
 
 const enabled = true
 
@@ -59,7 +59,7 @@ export const HoverableMove = ({children, move}) => {
             onMouseLeave: () => setHover(false),
             onMouseEnter: () => setHover(true),
             ref: elementRef,
-            key: child.key || JSON.stringify(move)
+            key: child.key || JSON.stringify(move),
         })
     })
 

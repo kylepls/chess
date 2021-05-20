@@ -1,0 +1,29 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          ".*"
+        ]
+      }
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "max-depth": [
+      "error",
+      5
+    ],
+    "max-lines": [
+      "error",
+      200
+    ]
+  }
+}

@@ -1,52 +1,52 @@
-import {makeStyles, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
-import {useBoardContext, useBoardContextDispatch} from "../board/BoardContext";
-import {MoveArrows} from "./MoveArrows";
-import {HoverableMove} from "../hover/HoverableMove";
+import {makeStyles, Table, TableBody, TableCell, TableContainer, TableRow} from '@material-ui/core'
+import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
+import {HoverableMove} from 'hover/HoverableMove'
+import {MoveArrows} from 'moves/MoveArrows'
 
 const useStyles = makeStyles({
     root: {
         display: 'flex',
-        flexFlow: 'column'
+        flexFlow: 'column',
     },
     item: {
         '&:hover': {
             background: '#ccc',
-            cursor: 'pointer'
-        }
+            cursor: 'pointer',
+        },
     },
     number: {
-        width: 'min-content'
+        width: 'min-content',
     },
     selectedMove: {
         background: 'rgba(172,255,18,0.25)',
         '&:hover': {
             background: 'rgba(116,167,11,0.25)',
-        }
+        },
     },
     navigationIcons: {
-        height: '2.7em'
-    }
+        height: '2.7em',
+    },
 })
 
 export const MoveList = () => {
 
     const state = useBoardContext()
     const dispatch = useBoardContextDispatch()
-    const styles = useStyles();
-    const content = [];
+    const styles = useStyles()
+    const content = []
 
-    const activeCss = i => i === state.currentMove ? styles.selectedMove : undefined;
+    const activeCss = i => i === state.currentMove ? styles.selectedMove : undefined
 
     const makeCell = (move, i) => {
         const click = () => dispatch({type: 'SET_MOVE', payload: i})
-        let key = `${i}+${move.fen}`;
+        let key = `${i}+${move.fen}`
         const content =
             <TableCell
                 key={key}
                 onClick={click}
                 className={`${styles.item} ${(activeCss(i))}`}>
                 {move.san}
-            </TableCell>;
+            </TableCell>
         if (i !== state.currentMove) {
             return (
                 <HoverableMove key={key} move={move}>
@@ -58,9 +58,9 @@ export const MoveList = () => {
         }
     }
 
-    const moves = state.history;
+    const moves = state.history
     for (let i = 0; i < moves.length; i += 2) {
-        const cols = [];
+        const cols = []
 
         cols.push(<TableCell className={styles.number} key={`idx${i}`}>{(i / 2) + 1}</TableCell>)
         cols.push(makeCell(moves[i], i))
