@@ -77,7 +77,7 @@ const Line = ({moves, score}) => {
 }
 
 const LinearProgressWithLabel = (props) => {
-    const displayValue = props.displayValue
+    const {displayValue} = props
     const passProps = {...props}
     delete passProps['displayValue']
 

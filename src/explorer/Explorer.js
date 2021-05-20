@@ -44,13 +44,13 @@ export const Explorer = ({fen}) => {
     }, [fen])
 
     const makeMove = move => {
-        const san = move.san
+        const {san} = move
         dispatch({type: 'MOVE', payload: move})
         dispatch({type: 'PLAYER_MOVE', payload: san})
     }
 
     const activeRowCss = move => {
-        const history = state.history
+        const {history} = state
         const nextMoveIndex = state.currentMove + 1
         if (nextMoveIndex < history.length) {
             const playedMove = history[nextMoveIndex]

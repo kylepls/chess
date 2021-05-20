@@ -1,29 +1,21 @@
 import {Box, makeStyles} from '@material-ui/core'
-// TODO use theme
-import {Style} from 'Style'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     numericScore: ({score}) => ({
         borderRadius: '0.2em',
         width: '3.5em',
         height: '1.5em',
-        ...getCss(score),
+        ...getCss(score, theme),
     }),
-})
+}))
 
-const getCss = (score) => {
+const getCss = (score, theme) => {
     if (score > 0) {
-        return {
-            ...Style.white,
-        }
+        return theme.palette.sides.white
     } else if (score < 0) {
-        return {
-            ...Style.black,
-        }
+        return theme.palette.sides.black
     } else {
-        return {
-            ...Style.draw,
-        }
+        return theme.palette.sides.draw
     }
 }
 

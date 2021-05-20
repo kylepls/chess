@@ -26,7 +26,7 @@ export const PracticeController = ({children}) => {
                 const combinedTotal = top5.reduce((total, it) => it.total + total, 0)
 
                 if (top5.length > 0) {
-                    let selection = top5[0]
+                    let [selection] = top5
                     let i = 0
                     let pctSum = 0
                     while (pctSum < random) {
@@ -42,7 +42,7 @@ export const PracticeController = ({children}) => {
                     }, 500)
                 } else {
                     // completed a line, reset
-                    const opening = practiceState.opening
+                    const {opening} = practiceState
                     setTimeout(() => {
                         dispatchBoard({type: 'SET_MOVES', payload: opening.moves})
                         dispatchPractice({type: 'PLAY_AGAIN'})

@@ -24,6 +24,16 @@
     "max-lines": [
       "error",
       200
+    ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "array": true,
+        "object": true
+      },
+      {
+        "enforceForRenamedProperties": false
+      }
     ]
   }
 }

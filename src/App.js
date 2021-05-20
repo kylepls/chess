@@ -29,6 +29,20 @@ const useStyles = makeStyles({
 const theme = createMuiTheme({
     palette: {
         type: 'dark',
+        sides: {
+            white: {
+                background: '#fff',
+                color: '#303030',
+            },
+            draw: {
+                background: '#666',
+                color: '#fff',
+            },
+            black: {
+                background: '#333',
+                color: '#fff',
+            },
+        }
     },
 })
 
@@ -71,5 +85,3 @@ const AppArea = () => {
         </Container>
     )
 }
-
-export default App

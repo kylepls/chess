@@ -1,17 +1,16 @@
 import {makeStyles} from '@material-ui/core'
 import React from 'react'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
         '& span:nth-child(1)': {
-            backgroundColor: '#fff',
-            color: '#303030',
+            ...theme.palette.sides.white
         },
         '& span:nth-child(2)': {
-            backgroundColor: '#666',
+            ...theme.palette.sides.draw
         },
         '& span:nth-child(3)': {
-            backgroundColor: '#333',
+            ...theme.palette.sides.black
         },
         '& span': {
             textAlign: 'center',
@@ -21,14 +20,14 @@ const useStyles = makeStyles({
             textOverflow: 'ellipsis',
         },
     },
-})
+}))
 
 export const TriBar = ({white, draws, black}) => {
 
     const styles = useStyles()
     const total = white + draws + black
 
-    const f = v => {
+    const formatValue = v => {
         if (v > 0) {
             return parseFloat((v / total * 100).toFixed(1))
         } else {
@@ -36,9 +35,9 @@ export const TriBar = ({white, draws, black}) => {
         }
     }
 
-    const whiteP = f(white)
-    const drawP = f(draws)
-    let blackP = f(black)
+    const whiteP = formatValue(white)
+    const drawP = formatValue(draws)
+    let blackP = formatValue(black)
 
     const all = whiteP + drawP + blackP
     if (all > 100) {

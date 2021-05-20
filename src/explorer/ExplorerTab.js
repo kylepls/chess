@@ -2,12 +2,12 @@ import {useBoardContext} from 'board/BoardContext'
 import {Explorer} from 'explorer/Explorer'
 import {MoveList} from 'moves/MoveList'
 import React from 'react'
-import {VerticalSplit} from 'split/Splitter'
+import {VerticalSplit} from 'utils/split/Splitter'
 
 export const ExplorerTab = () => {
 
     const boardState = useBoardContext()
-    const displayFen = boardState.displayFen
+    const {displayFen} = boardState
 
     return (
         <VerticalSplit splits={[30, 70]}>

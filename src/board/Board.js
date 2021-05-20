@@ -133,7 +133,7 @@ const BoardArea = ({children}) => {
 
     useLayoutEffect(() => {
         const updateSize = () => {
-            const current = divRef.current
+            const {current} = divRef
             const maxWidth = current.parentElement.clientWidth
             const maxHeight = current.parentElement.clientHeight
 

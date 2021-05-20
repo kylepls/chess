@@ -66,14 +66,14 @@ export const AnalysisController = ({children}) => {
         engine.postMessage(`go depth ${depth}`)
     }, [depth])
 
-    const lines = analysisState.lines
+    const {lines} = analysisState
     useEffect(() => {
         if (run && !boardState.ghost) {
             if (lines && lines.length > 0) {
                 const shapes = lines
                     .filter(it => it.moves.length > 0)
                     .map(it => {
-                        const move = it.moves[0]
+                        const [move] = it.moves
                         chessjs.load(boardState.displayFen)
                         const chessMove = chessjs.move(move)
                         if (chessMove) {

@@ -6,7 +6,7 @@ import {usePracticeContext} from 'practice/PracticeContext'
 import {PracticeController} from 'practice/PracticeController'
 import {PracticeControls} from 'practice/PracticeControls'
 import React from 'react'
-import {VerticalSplit} from 'split/Splitter'
+import {VerticalSplit} from 'utils/split/Splitter'
 
 export const PracticeTab = () => {
     const practiceState = usePracticeContext()

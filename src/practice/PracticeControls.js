@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 export const PracticeControls = () => {
     const practiceState = usePracticeContext()
 
-    const playing = practiceState.playing
+    const {playing} = practiceState
     return (
         playing ?
             <StopButton/>

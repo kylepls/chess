@@ -18,7 +18,7 @@ export const queryLichessExplorer = (fen, cb) => {
         }
         axios.get('https://explorer.lichess.ovh/lichess', {params})
             .then(res => {
-                const data = res.data
+                const {data} = res
                 const json = {...data, moves: data.moves.map(move => mapMove(fen, move))}
                 memo[fen] = json
                 cb(json)

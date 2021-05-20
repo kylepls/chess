@@ -1,4 +1,4 @@
-import {loadPgn} from 'practice/pgn/PgnLoader'
+import {loadPgn} from 'practice/pgn/PGNLoader'
 import {useEffect, useReducer} from 'react'
 import {createContainer} from 'react-tracked'
 
