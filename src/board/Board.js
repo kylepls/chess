@@ -95,8 +95,9 @@ export const Board = () => {
                 dests: validMoves(state.boardChessjs),
                 events: {
                     after: (orig, dest) => {
-                        dispatch({type: 'MOVE', payload: makeMoveFromTo(state.boardChessjs.fen(), orig, dest)})
-                        dispatch({type: 'PLAYER_MOVE', payload: {from: orig, to: dest}})
+                        let payload = makeMoveFromTo(state.boardChessjs.fen(), orig, dest)
+                        dispatch({type: 'MOVE', payload: payload})
+                        dispatch({type: 'PLAYER_MOVE', payload: payload})
                     },
                 },
             },

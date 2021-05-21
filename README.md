@@ -49,3 +49,6 @@ perspective. Each line will show an _optimal_ move list (hoverable) along with a
 * Openings - [365chess](https://www.365chess.com/eco.php) & [chess.com](https://chess.com)
 * Explorer Data - [Lichess API](https://lichess.org/api#tag/Opening-Explorer)
 * Chess Engine - [stockfish](https://stockfishchess.org/)
+* UCI Protocol - [uci](http://wbec-ridderkerk.nl/html/UCIProtocol.html)
+* Icons - [react-icons](https://react-icons.github.io/)
+* Chess Board - [chessground](https://github.com/ornicar/chessground/)

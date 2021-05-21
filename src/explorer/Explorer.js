@@ -8,6 +8,7 @@ import React, {useEffect, useState} from 'react'
 
 const useStyles = makeStyles({
     row: {
+        userSelect: 'none',
         cursor: 'pointer',
         '&:hover': {
             background: '#aaa',
@@ -44,9 +45,8 @@ export const Explorer = ({fen}) => {
     }, [fen])
 
     const makeMove = move => {
-        const {san} = move
         dispatch({type: 'MOVE', payload: move})
-        dispatch({type: 'PLAYER_MOVE', payload: san})
+        dispatch({type: 'PLAYER_MOVE', payload: move})
     }
 
     const activeRowCss = move => {

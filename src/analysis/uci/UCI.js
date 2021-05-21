@@ -1,6 +1,6 @@
 import {parseUciInfoLine} from 'analysis/uci/UCIParser'
 
-const debug = false
+const debug = true
 
 // based on https://github.com/ebemunk/node-uci/blob/7da2216b49ac1f575a042d033013a2ac09e1b650/src/Engine/index.js
 export default class UCI {
@@ -125,8 +125,8 @@ export default class UCI {
                             this._setReceiver(message => {
                                 const info = parseUciInfoLine(message)
                                 if (info.hasOwnProperty('bestMove')) {
-                                    resolve2(message)
-                                    resolve(message)
+                                    resolve2(lines)
+                                    resolve(lines)
                                 } else {
                                     lines[info.lineNumber - 1] = info
                                     linesFunction([...lines])
@@ -143,7 +143,8 @@ export default class UCI {
     /**
      * Obtain an evaluation for the current chess position
      */
-    async eval(fen, scoreFunction = () => {}, depth=8) {
+    async eval(fen, depth = 8, scoreFunction = () => {
+    }) {
         let cp = -1000
         const lineFunction = ([{score}]) => {
             cp = score

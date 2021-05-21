@@ -1,32 +1,51 @@
-import {makeStyles, Table, TableBody, TableCell, TableContainer, TableRow} from '@material-ui/core'
+import {makeStyles, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from '@material-ui/core'
+import transitions from '@material-ui/core/styles/transitions'
 import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 import {HoverableMove} from 'hover/HoverableMove'
 import {MoveArrows} from 'moves/MoveArrows'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexFlow: 'column',
+        '& td': {
+            borderBottom: '0',
+        },
     },
     item: {
+        userSelect: 'none',
+        transition: transitions.create(['background'], {
+            duration: theme.transitions.duration.shortest,
+        }),
         '&:hover': {
-            background: '#ccc',
+            background: theme.palette.action.focus,
             cursor: 'pointer',
         },
     },
     number: {
         width: 'min-content',
+        background: theme.palette.grey['A400'],
     },
     selectedMove: {
-        background: 'rgba(172,255,18,0.25)',
+        background: theme.palette.primary.light,
         '&:hover': {
-            background: 'rgba(116,167,11,0.25)',
+            background: theme.palette.primary.main,
         },
     },
     navigationIcons: {
         height: '2.7em',
     },
-})
+}))
+
+const MoveNumber = ({move}) => {
+    const styles = useStyles()
+
+    return (
+        <TableCell className={styles.number} key={`idx${move}`}>
+            <Typography variant='subtitle1' align='center'>{move}</Typography>
+        </TableCell>
+    )
+}
 
 export const MoveList = () => {
 
@@ -62,7 +81,7 @@ export const MoveList = () => {
     for (let i = 0; i < moves.length; i += 2) {
         const cols = []
 
-        cols.push(<TableCell className={styles.number} key={`idx${i}`}>{(i / 2) + 1}</TableCell>)
+        cols.push(<MoveNumber move={(i/2)+1} />)
         cols.push(makeCell(moves[i], i))
 
         if (i + 1 < moves.length) {
@@ -72,6 +91,14 @@ export const MoveList = () => {
         }
 
         content.push(<TableRow key={`row${i}`}>{cols}</TableRow>)
+    }
+
+    if (moves.length === 0) {
+        content.push(<TableRow key="0">
+            <MoveNumber move={1} />
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+        </TableRow>)
     }
 
     return (

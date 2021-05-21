@@ -1,14 +1,9 @@
 import {Box, Grid, makeStyles, Typography} from '@material-ui/core'
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
-
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-
-import LoopIcon from '@material-ui/icons/Loop'
-import SkipNextIcon from '@material-ui/icons/SkipNext'
-
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
 import {useAnalysisContext} from 'analysis/AnalysisContext'
 import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
+import {EndIcon, FlipIcon, NextIcon, PreviousIcon, StartIcon} from 'moves/icons/MoveIcons'
+
+import {BiFastForward, BiSkipNext, BiSkipPrevious} from 'react-icons/bi'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -18,7 +13,6 @@ const useStyles = makeStyles(theme => ({
         },
         '& svg:hover': {
             cursor: 'pointer',
-            background: '#ccc',
         },
         background: theme.palette.background.default,
     },
@@ -53,7 +47,7 @@ export const MoveArrows = () => {
             <Grid item xs={1}>
                 <Grid container justify="center">
                     <Box className={styles.flip}>
-                        <LoopIcon onClick={flipBoard}/>
+                        <FlipIcon onClick={flipBoard}/>
                     </Box>
                 </Grid>
             </Grid>
@@ -83,10 +77,10 @@ const MoveControls = () => {
 
     return (
         <Grid container justify="center">
-            <SkipPreviousIcon onClick={start}/>
-            <KeyboardArrowLeftIcon onClick={previous}/>
-            <KeyboardArrowRightIcon onClick={next}/>
-            <SkipNextIcon onClick={end}/>
+            <StartIcon onClick={start}/>
+            <PreviousIcon onClick={previous}/>
+            <NextIcon onClick={next}/>
+            <EndIcon onClick={end}/>
         </Grid>
     )
 }
