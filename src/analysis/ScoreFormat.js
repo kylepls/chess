@@ -1,7 +1,7 @@
 export const parseScore = (score) => {
     // TODO draw
 
-    if (score.startsWith('#')) {
+    if (typeof score === 'string' && score.startsWith('#')) {
         const value = parseInt(score.substr(1))
         const formatted = `#${value}`
         return {
@@ -10,7 +10,7 @@ export const parseScore = (score) => {
             formatted,
         }
     } else {
-        const value = score
+        const value = score / 100
         const prefix = value > 0 ? '+' : ''
         const formatted = `${prefix}${value}`
         return {

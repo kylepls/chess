@@ -38,15 +38,14 @@ const useStyles = makeStyles({
 })
 
 export const AnalysisLines = () => {
-    const analysisState = useAnalysisContext()
-
-    const {lines, depth} = analysisState
+    const {lines, depth} = useAnalysisContext()
 
     const currentDepth = [...lines.filter(it => it.depth).map(it => it.depth), depth].min()
 
     return (
         <TableContainer>
-            <LinearProgressWithLabel variant="determinate" value={currentDepth / depth * 100}
+            <LinearProgressWithLabel variant="determinate"
+                                     value={currentDepth / depth * 100}
                                      displayValue={`${currentDepth}/${depth}`}/>
             <Table display="block">
                 <colgroup>

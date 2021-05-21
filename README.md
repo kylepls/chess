@@ -1,5 +1,7 @@
 # Chess Opening Thingy
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/19dedc58-0c8a-4d40-a443-a03133004685/deploy-status)](https://app.netlify.com/sites/chess-thing/deploys)
+
 ### TL;DR
 
 Training tool for Chess openings.
@@ -41,8 +43,6 @@ likely different line.
 
 Analysis - Use [Stockfish 11](https://stockfishchess.org/) to find the best moves in a position from a computer's
 perspective. Each line will show an _optimal_ move list (hoverable) along with a pawn score.
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/19dedc58-0c8a-4d40-a443-a03133004685/deploy-status)](https://app.netlify.com/sites/chess-thing/deploys)
 
 ### Tools / Links
 

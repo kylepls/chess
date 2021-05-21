@@ -1,9 +1,11 @@
+import UCI from 'analysis/uci/UCI'
 import {useReducer} from 'react'
 import {createContainer} from 'react-tracked'
 
 const initialState = {
     // eslint-disable-next-line no-eval
-    engine: eval('sf'),
+    engine: new UCI(eval('sf')),
+    ready: false,
     depth: 20,
     linesCount: 3,
     run: false,
@@ -39,6 +41,8 @@ const reducer = (state, {type, payload}) => {
             return {...state, run: payload, lines: newLines}
         case 'SET_EVALUATION':
             return {...state, evaluation: payload}
+        case 'READY':
+            return {...state, ready: true}
         default:
             return state
     }

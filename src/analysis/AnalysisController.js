@@ -1,6 +1,5 @@
 import {useAnalysisContext, useAnalysisContextDispatch} from 'analysis/AnalysisContext'
 import {parseScore} from 'analysis/ScoreFormat'
-import UCI from 'analysis/uci/UCI'
 import {useBoardContext} from 'board/BoardContext'
 import Chess from 'chess.js'
 import {getLineMoves} from 'MoveUtils'
@@ -14,18 +13,22 @@ export const AnalysisController = ({children}) => {
     const analysisState = useAnalysisContext()
     const dispatchAnalysis = useAnalysisContextDispatch()
 
-    const uci = useRef(new UCI(analysisState.engine)).current
+    const uci = analysisState.engine
 
-    const viewFen = boardState.displayFen
-    const {engine, run, depth, linesCount} = analysisState
+    const {displayFen} = boardState
+    const {run, depth, ready} = analysisState
 
     useEffect(() => {
-        if (!run) uci.postStop()
-        return () => uci.postStop()
+        if (!run) uci.stop()
     }, [run])
 
     useEffect(() => {
-        if (run) {
+        uci.init()
+            .then(() => dispatchAnalysis({type: 'READY'}))
+    }, [])
+
+    useEffect(() => {
+        if (run && ready) {
             dispatchAnalysis({type: 'SET_THINKING', payload: 'TRUE'})
 
             const fixLines = (lines) => {
@@ -35,36 +38,25 @@ export const AnalysisController = ({children}) => {
                 })
             }
 
-            uci.stop()
-                .then(() => uci.isReady())
-                .then(() => uci.setPosition(viewFen))
-                .then(() => uci.eval())
-                .then(evaluation => {
-                    dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
-                })
-                .then(() => {
-                    return uci.go(depth, linesCount, (lines) => {
-                        const fixedLines = fixLines(lines)
-                        dispatchAnalysis({type: 'SET_LINES', payload: fixedLines})
-                    })
-                })
-                .then((bestMove) => dispatchAnalysis({type: 'DONE'}))
-                .catch(reason => console.info(reason))
-        } else {
-            uci.stop()
-                .then(() => uci.isReady())
-                .then(() => uci.setPosition(viewFen))
-                .then(() => uci.eval())
-                .then(evaluation => {
-                    dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
-                })
-                .catch(reason => console.info(reason))
-        }
-    }, [viewFen, run])
+            let linesFunction = (lines) => {
+                const fixedLines = fixLines(lines)
+                dispatchAnalysis({type: 'SET_LINES', payload: fixedLines})
+            }
 
-    useEffect(() => {
-        engine.postMessage(`go depth ${depth}`)
-    }, [depth])
+            // TODO
+            // dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
+
+            uci.stop()
+                .then(() => uci.go(displayFen, linesFunction))
+                .then(() => dispatchAnalysis({type: 'DONE'}))
+                .catch(reason => console.error('stockfish go', reason))
+        } else {
+            const scoreFunction = evaluation => dispatchAnalysis({type: 'SET_EVALUATION', payload: mapEvaluation(evaluation)})
+            uci.stop()
+                .then(() => uci.eval(displayFen, scoreFunction))
+                .catch(console.error)
+        }
+    }, [displayFen, run, ready])
 
     const {lines} = analysisState
     useEffect(() => {
@@ -106,6 +98,6 @@ export const AnalysisController = ({children}) => {
 
 const mapEvaluation = (evaluation) => {
     return {
-        score: parseScore(evaluation.evaluation),
+        score: parseScore(evaluation),
     }
 }
