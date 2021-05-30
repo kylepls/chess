@@ -1,4 +1,6 @@
 import {Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@material-ui/core'
+import transitions from '@material-ui/core/styles/transitions'
+import {Skeleton} from '@material-ui/lab'
 import {makeStyles} from '@material-ui/styles'
 import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 import {TriBar} from 'explorer/Tribar'
@@ -14,6 +16,10 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             background: theme.palette.action.hover,
         },
+        opacity: ({secondaryLoading}) => secondaryLoading ? '30%' : '100%',
+        transition: transitions.create(['opacity'], {
+            duration: theme.transitions.duration.shorter,
+        }),
     },
     loaderContainer: {
         display: 'flex',
@@ -31,9 +37,29 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.primary.dark,
         },
     },
-    typography: {
-    }
+    tableContainer: ({loading}) => ({
+        overflowY: loading ? 'hidden' : 'auto',
+    }),
 }))
+
+const LoaderRow = (props) => {
+    const styles = useStyles()
+    return (
+        <TableRow {...props} className={`${styles.row}`}>
+            <TableCell>
+                <Skeleton/>
+            </TableCell>
+            <TableCell>
+                <Skeleton/>
+            </TableCell>
+            <TableCell>
+                <Skeleton/>
+            </TableCell>
+        </TableRow>
+    )
+}
+
+const skeletonRows = [...Array(10).keys()].map(it => (<LoaderRow key={it}/>))
 
 export const Explorer = ({fen}) => {
     const boardState = useBoardContext()
@@ -42,20 +68,30 @@ export const Explorer = ({fen}) => {
     const settingsState = useSettingsContext()
 
     const [data, setData] = useState()
-    const [loading, setLoading] = useState(true)
+    const [initialLoading, setInitialLoading] = useState(true)
 
-    // TODO deal with loading
+    const [secondaryLoading, setSecondaryLoading] = useState(false)
+
     useEffect(() => {
-        setLoading(true)
+        if (!initialLoading) {
+            setSecondaryLoading(true)
+        }
         queryLichessExplorer(fen, data => {
             setData(data)
-            setLoading(false)
+
+            if (initialLoading) {
+                setInitialLoading(false)
+            } else {
+                setSecondaryLoading(false)
+            }
         }, settingsState.lichessSpeeds, settingsState.lichessRatings)
     }, [fen])
 
     const makeMove = move => {
-        dispatchBoard({type: 'MOVE', payload: move})
-        dispatchBoard({type: 'PLAYER_MOVE', payload: move})
+        if (!secondaryLoading) {
+            dispatchBoard({type: 'MOVE', payload: move})
+            dispatchBoard({type: 'PLAYER_MOVE', payload: move})
+        }
     }
 
     const activeRowCss = move => {
@@ -65,10 +101,10 @@ export const Explorer = ({fen}) => {
         return playedMove?.san === move.san ? styles.active : null
     }
 
-    const styles = useStyles()
+    const styles = useStyles({initialLoading, secondaryLoading})
     return (
         <Box position="relative">
-            <TableContainer>
+            <TableContainer className={styles.tableContainer}>
                 <Table stickyHeader>
                     <colgroup>
                         <col width="10%"/>
@@ -82,32 +118,41 @@ export const Explorer = ({fen}) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data && data.moves.map(move =>
-                            <HoverableMove key={move.uci} move={move}>
-                                <TableRow
-                                    className={`${styles.row} ${activeRowCss(move)}`}
-                                    onClick={() => makeMove(move)}
-                                >
-                                    <TableCell>
-                                        <Typography className={styles.typography} variant="body1">
-                                            {move.san}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography variant="caption">
-                                            {move.white + move.draws + move.black}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <TriBar {...move} />
-                                    </TableCell>
-                                </TableRow>
-                            </HoverableMove>,
+                        {!initialLoading && data && data.moves.map(move =>
+                            <ExplorerRow
+                                className={`${styles.row} ${activeRowCss(move)}`}
+                                onClick={() => makeMove(move)}
+                                move={move}
+                            />,
                         )
                         }
+                        {initialLoading && skeletonRows}
                     </TableBody>
                 </Table>
             </TableContainer>
         </Box>
+    )
+}
+
+const ExplorerRow = (props) => {
+    const {move} = props
+    return (
+        <HoverableMove key={move.uci} move={move}>
+            <TableRow {...props}>
+                <TableCell>
+                    <Typography variant="body1">
+                        {move.san}
+                    </Typography>
+                </TableCell>
+                <TableCell>
+                    <Typography variant="caption">
+                        {move.white + move.draws + move.black}
+                    </Typography>
+                </TableCell>
+                <TableCell>
+                    <TriBar {...move} />
+                </TableCell>
+            </TableRow>
+        </HoverableMove>
     )
 }
