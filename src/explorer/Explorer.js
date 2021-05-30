@@ -108,7 +108,7 @@ export const Explorer = ({fen}) => {
                 <Table stickyHeader>
                     <colgroup>
                         <col width="10%"/>
-                        <col width="10%"/>
+                        <col width="15%"/>
                     </colgroup>
                     <TableHead>
                         <TableRow>
