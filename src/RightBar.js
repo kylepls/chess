@@ -5,12 +5,16 @@ import {AnalysisTab} from 'analysis/AnalysisTab'
 import {ExplorerTab} from 'explorer/ExplorerTab'
 import {PracticeTab} from 'practice/PracticeTab'
 import React, {useEffect, useLayoutEffect, useRef} from 'react'
+import {SettingsTab} from 'settings/SettingsTab'
 import {useSyncedLocalStorage} from 'use-synced-local-storage'
 import {useForceUpdate} from 'utils/ForceUpdate'
 
 const useStyles = makeStyles({
     tabList: {
         height: 'auto',
+        '& button': {
+            flexGrow: 1
+        }
     },
     tabPanel: {
         padding: '0 !important',
@@ -47,6 +51,7 @@ export const RightBar = () => {
                             <Tab label="explorer" value="explorer"/>
                             <Tab label="practice" value="practice"/>
                             <Tab label="analysis" value="analysis"/>
+                            <Tab label="settings" value="settings"/>
                         </TabList>
                         <div style={{
                             height: `calc(100% - ${headerHeight}px)`,
@@ -59,6 +64,9 @@ export const RightBar = () => {
                             </TabPanel>
                             <TabPanel value="analysis">
                                 <AnalysisTab/>
+                            </TabPanel>
+                            <TabPanel value="settings">
+                                <SettingsTab />
                             </TabPanel>
                         </div>
                     </Grid>

@@ -71,6 +71,20 @@ const reducer = (state, {type, payload}) => {
                 displayFen: boardChessjs.fen(),
                 fen: chessjs.fen(),
             }
+        case 'SET_MOVE_EVALUATION':
+            return {
+                ...state,
+                history: state.history.map((it, i) => {
+                    if (payload.move === i) {
+                        return {
+                            ...it,
+                            evaluation: payload.evaluation,
+                        }
+                    } else {
+                        return it
+                    }
+                }),
+            }
         case 'MOVE':
             const moves = [...state.history.slice(0, currentMove + 1), payload]
             updateChessjs(chessjs, boardChessjs, moves)

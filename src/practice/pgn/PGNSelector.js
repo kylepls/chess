@@ -23,11 +23,8 @@ const useStyles = makeStyles(theme => ({
         },
     },
     selected: {
-        background: theme.palette.primary.light,
+        background: theme.palette.primary.main,
         '&:hover': {
-            background: theme.palette.primary.main,
-        },
-        '&:active': {
             background: theme.palette.primary.dark,
         },
     },

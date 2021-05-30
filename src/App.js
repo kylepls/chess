@@ -1,6 +1,7 @@
 import {Container, createMuiTheme, CssBaseline, Grid, MuiThemeProvider} from '@material-ui/core'
 import {makeStyles} from '@material-ui/styles'
 import {AnalysisContextProvider} from 'analysis/AnalysisContext'
+import {SettingsContextProvider} from 'settings/SettingsContext'
 import {AnalysisController} from 'analysis/AnalysisController'
 import 'App.css'
 import {Board} from 'board/Board'
@@ -42,7 +43,7 @@ const theme = createMuiTheme({
                 background: '#333',
                 color: '#fff',
             },
-        }
+        },
     },
 })
 
@@ -53,17 +54,19 @@ export const App = () => {
             <CssBaseline/>
             <div className="App">
                 <div className={styles.root}>
-                    <OpeningsContextProvider>
-                        <BoardContextProvider>
-                            <AnalysisContextProvider>
-                                <PracticeContextProvider>
-                                    <AnalysisController>
-                                        <AppArea key={0}/>
-                                    </AnalysisController>
-                                </PracticeContextProvider>
-                            </AnalysisContextProvider>
-                        </BoardContextProvider>
-                    </OpeningsContextProvider>
+                    <SettingsContextProvider>
+                        <OpeningsContextProvider>
+                            <BoardContextProvider>
+                                <AnalysisContextProvider>
+                                    <PracticeContextProvider>
+                                        <AnalysisController>
+                                            <AppArea key={0}/>
+                                        </AnalysisController>
+                                    </PracticeContextProvider>
+                                </AnalysisContextProvider>
+                            </BoardContextProvider>
+                        </OpeningsContextProvider>
+                    </SettingsContextProvider>
                 </div>
             </div>
         </MuiThemeProvider>

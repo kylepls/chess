@@ -11,7 +11,7 @@ export const parseUciInfoLine = data => {
     const [scoreType, scoreValue] = extract(data, UCIRegexes.info.score)
     // todo assume mate
     const score = scoreType === 'cp' ? parseInt(scoreValue) : `#${scoreValue}`
-    const moves = extract(data, UCIRegexes.info.pv).split(' ')
+    const moves = extract(data, UCIRegexes.info.pv)?.split(' ') || []
 
     return {lineNumber, depth, nodes, score, moves}
 }

@@ -1,4 +1,5 @@
 import {parseUciInfoLine} from 'analysis/uci/UCIParser'
+import {toMove} from 'MoveUtils'
 
 const debug = true
 
@@ -114,6 +115,17 @@ export default class UCI {
     }
 
     async go(fen, linesFunction, pv, depth) {
+        const isWhite = toMove(fen) === 'white'
+
+        const fixScore = (score) => {
+            if (typeof score === 'number') {
+                return score * (isWhite ? 1 : -1)
+            } else {
+                return score
+            }
+        }
+
+
         const lines = Array(pv || this.pv)
 
         return await new Promise((resolve, reject) => {
@@ -128,7 +140,8 @@ export default class UCI {
                                     resolve2(lines)
                                     resolve(lines)
                                 } else {
-                                    lines[info.lineNumber - 1] = info
+                                    const lineNumber = Math.max(info.lineNumber - 1, 0)
+                                    lines[lineNumber] = {...info, score: fixScore(info.score)}
                                     linesFunction([...lines])
                                 }
                             })
@@ -146,7 +159,8 @@ export default class UCI {
     async eval(fen, depth = 8, scoreFunction = () => {
     }) {
         let cp = -1000
-        const lineFunction = ([{score}]) => {
+        const lineFunction = ([line]) => {
+            const {score} = line
             cp = score
             scoreFunction(score)
         }

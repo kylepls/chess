@@ -46,6 +46,17 @@ export const makeMoveFromTo = (fen, from, to) => {
     return makeMove(res.from, res.to, res.san, chess.fen())
 }
 
+export const toMove = (fen) => {
+    chess.load(fen)
+    const turnMap = {
+        'b': 'black',
+        'w': 'white',
+    }
+    const turn = chess.turn()
+
+    return turnMap[turn] || 'undefined'
+}
+
 export const flip = (side) => {
     return side === 'black' ? 'white' : 'black'
 }

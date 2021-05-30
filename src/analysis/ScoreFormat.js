@@ -10,7 +10,7 @@ export const parseScore = (score) => {
             formatted,
         }
     } else {
-        const value = score / 100
+        const value = (score / 100).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 1 })
         const prefix = value > 0 ? '+' : ''
         const formatted = `${prefix}${value}`
         return {

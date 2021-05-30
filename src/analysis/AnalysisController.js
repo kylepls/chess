@@ -1,6 +1,6 @@
 import {useAnalysisContext, useAnalysisContextDispatch} from 'analysis/AnalysisContext'
 import {parseScore} from 'analysis/ScoreFormat'
-import {useBoardContext} from 'board/BoardContext'
+import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 import Chess from 'chess.js'
 import {getLineMoves} from 'MoveUtils'
 import {useEffect} from 'react'
@@ -10,6 +10,8 @@ const chessjs = new Chess()
 export const AnalysisController = ({children}) => {
 
     const boardState = useBoardContext()
+    const dispatchBoard = useBoardContextDispatch()
+
     const analysisState = useAnalysisContext()
     const dispatchAnalysis = useAnalysisContextDispatch()
 
@@ -49,11 +51,25 @@ export const AnalysisController = ({children}) => {
                 .then(() => dispatchAnalysis({type: 'DONE'}))
                 .catch(reason => console.error('stockfish go', reason))
         } else {
-            const scoreFunction = evaluation => dispatchAnalysis({
-                type: 'SET_EVALUATION',
-                payload: mapEvaluation(evaluation),
-            })
-            uci.eval(displayFen, 10, scoreFunction)
+            const scoreFunction = evaluation => {
+                let objectEvaluation = mapEvaluation(evaluation)
+                dispatchAnalysis({
+                    type: 'SET_EVALUATION',
+                    payload: objectEvaluation,
+                })
+
+                if (boardState.currentMove > -1) {
+                    dispatchBoard({
+                        type: 'SET_MOVE_EVALUATION',
+                        payload: {
+                            move: boardState.currentMove,
+                            evaluation: objectEvaluation.score
+                        }
+                    })
+                }
+            }
+            uci.eval(displayFen, 13)
+                .then(scoreFunction)
                 .catch(console.error)
         }
     }, [displayFen, run, ready])
