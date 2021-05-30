@@ -61,16 +61,20 @@ export const MoveList = () => {
     const activeCss = i => i === state.currentMove ? styles.selectedMove : undefined
 
     const currentMoveRef = useRef()
+    const tableContainerRef = useRef()
+
     const makeCell = (move, i) => {
         const click = () => dispatch({type: 'SET_MOVE', payload: i})
         let key = `${i}+${move.fen}`
+
+        const ref = (i === state.currentMove) ? currentMoveRef : undefined
 
         const content =
             <TableCell
                 key={key}
                 onClick={click}
                 className={`${styles.item} ${(activeCss(i))}`}
-                ref={i === state.currentMove ? currentMoveRef : undefined}>
+                ref={ref}>
                 <Grid container alignItems="center" justify="space-between">
                     <Typography display="inline">
                         {move.san}
@@ -112,9 +116,14 @@ export const MoveList = () => {
 
     useLayoutEffect(() => {
         window.requestAnimationFrame(() => {
-            const {current} = currentMoveRef
-            if (current) {
-                current.scrollIntoView({behavior: 'smooth', block: 'nearest'})
+            const scrollOptions = {behavior: 'smooth', block: 'nearest'}
+            if (state.currentMove > -1) {
+                const {current} = currentMoveRef
+                if (current) {
+                    current.scrollIntoView(scrollOptions)
+                }
+            } else {
+                tableContainerRef.current.scrollTo({...scrollOptions, top: 0})
             }
         })
     }, [state.currentMove])
@@ -129,7 +138,7 @@ export const MoveList = () => {
 
     return (
         <div className={styles.root}>
-            <TableContainer>
+            <TableContainer ref={tableContainerRef}>
                 <Table size="small">
                     <colgroup>
                         <col width="10%"/>

@@ -120,6 +120,7 @@ export const Explorer = ({fen}) => {
                     <TableBody>
                         {!initialLoading && data && data.moves.map(move =>
                             <ExplorerRow
+                                key={move.uci}
                                 className={`${styles.row} ${activeRowCss(move)}`}
                                 onClick={() => makeMove(move)}
                                 move={move}
