@@ -1,4 +1,5 @@
-import {Grid, makeStyles, Typography} from '@material-ui/core'
+import {Grid, makeStyles, Tooltip, Typography} from '@material-ui/core'
+import {withStyles} from '@material-ui/styles'
 import React from 'react'
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +26,13 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export const TriBar = ({white, draws, black}) => {
+const LightToolTip = withStyles(theme => ({
+    tooltip: {
+        backgroundColor: theme.palette.primary.main
+    }
+}))(Tooltip)
+
+export const TriBar = ({white, draws, black, averageRating}) => {
 
     const styles = useStyles()
     const total = white + draws + black
@@ -49,11 +56,15 @@ export const TriBar = ({white, draws, black}) => {
 
 
     return (
-        <Grid container className={styles.root}>
-            <SpanValue value={whiteP}/>
-            <SpanValue value={drawP}/>
-            <SpanValue value={blackP}/>
-        </Grid>
+        <LightToolTip title={
+            <Typography>Average Rating: {averageRating}</Typography>
+        }>
+            <Grid container className={styles.root}>
+                <SpanValue value={whiteP}/>
+                <SpanValue value={drawP}/>
+                <SpanValue value={blackP}/>
+            </Grid>
+        </LightToolTip>
     )
 }
 

@@ -7,7 +7,7 @@ div {
     height: 100%;
 }
 
-div[role='presentation'] div {
+div[role='presentation'] div, div[role='tooltip'] {
     height: auto;
     width: auto;
 }
