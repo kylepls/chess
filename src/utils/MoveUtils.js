@@ -1,4 +1,4 @@
-import Chess from 'chess.js'
+import Chess from 'chess.js/chess'
 
 const chess = new Chess()
 
@@ -18,8 +18,8 @@ export const makeMove = (
 export const makeMoveFenSan = (fen, move) => {
     chess.load(fen)
     const res = chess.move(move)
-    if (!res.from || !res.to) {
-        throw Error(`invalid move ${move} - ${fen}`)
+    if (!res?.from || !res?.to) {
+        throw Error(`invalid move ${JSON.stringify(move)} - ${fen}`)
     } else {
         return makeMove(res.from, res.to, res.san, chess.fen())
     }

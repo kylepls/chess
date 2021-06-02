@@ -1,5 +1,5 @@
 import {parseUciInfoLine} from 'analysis/uci/UCIParser'
-import {toMove} from 'MoveUtils'
+import {toMove} from 'utils/MoveUtils'
 
 const debug = true
 

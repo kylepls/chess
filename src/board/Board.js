@@ -4,7 +4,7 @@ import {makeStyles} from '@material-ui/styles'
 import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 import Chess from 'chess.js'
 import {Chessground} from 'chessground'
-import {makeMoveFromTo} from 'MoveUtils'
+import {makeMoveFromTo} from 'utils/MoveUtils'
 import React, {useEffect, useLayoutEffect, useRef} from 'react'
 
 const useStyles = makeStyles(theme => ({

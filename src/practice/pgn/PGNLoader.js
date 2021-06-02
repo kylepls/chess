@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {getLineMoves} from 'MoveUtils'
+import {getLineMoves} from 'utils/MoveUtils'
 import pgnParser from 'pgn-parser'
 import pgnUri from 'practice/pgn/openings.pgn'
 

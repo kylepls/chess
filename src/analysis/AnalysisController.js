@@ -1,11 +1,9 @@
 import {useAnalysisContext, useAnalysisContextDispatch} from 'analysis/AnalysisContext'
+import {getShapes} from 'analysis/MoveRanker'
 import {parseScore} from 'analysis/ScoreFormat'
 import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
-import Chess from 'chess.js'
-import {getLineMoves} from 'MoveUtils'
 import {useEffect} from 'react'
-
-const chessjs = new Chess()
+import {getLineMoves} from 'utils/MoveUtils'
 
 export const AnalysisController = ({children}) => {
 
@@ -63,8 +61,8 @@ export const AnalysisController = ({children}) => {
                         type: 'SET_MOVE_EVALUATION',
                         payload: {
                             move: boardState.currentMove,
-                            evaluation: objectEvaluation.score
-                        }
+                            evaluation: objectEvaluation.score,
+                        },
                     })
                 }
             }
@@ -78,28 +76,7 @@ export const AnalysisController = ({children}) => {
     useEffect(() => {
         if (run && !boardState.ghost) {
             if (lines && lines.length > 0) {
-                const shapes = lines
-                    .filter(it => it.moves.length > 0)
-                    .map(it => {
-                        const [move] = it.moves
-                        chessjs.load(boardState.displayFen)
-                        const chessMove = chessjs.move(move)
-                        if (chessMove) {
-                            const {from, to} = chessMove
-                            return {
-                                analysis: true,
-                                orig: from,
-                                dest: to,
-                                brush: 'red',
-                                mouseSq: to,
-                                snapToValidMove: true,
-                                pos: [600, 700],
-                            }
-                        } else {
-                            return null
-                        }
-                    })
-                    .filter(it => it !== null)
+                const shapes = getShapes(displayFen, lines)
                 const otherShapes = boardState.cg.state.drawable.autoShapes.filter(it => !it.hasOwnProperty('analysis'))
                 boardState.cg.setAutoShapes([...otherShapes, ...shapes])
             }

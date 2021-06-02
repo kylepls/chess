@@ -2,7 +2,7 @@ import {useAnalysisContext} from 'analysis/AnalysisContext'
 import {classifyMove} from 'analysis/moves/MoveTypes'
 import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 import {queryLichessExplorer} from 'Lichess'
-import {getLineMoves} from 'MoveUtils'
+import {getLineMoves} from 'utils/MoveUtils'
 import {usePracticeContext, usePracticeContextDispatch} from 'practice/PracticeContext'
 import {useEffect} from 'react'
 

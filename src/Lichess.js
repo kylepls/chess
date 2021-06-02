@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {makeMoveFenSan} from 'MoveUtils'
+import {makeMoveFenSan} from 'utils/MoveUtils'
 
 const memo = new Map()
 
