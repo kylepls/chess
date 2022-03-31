@@ -3,6 +3,7 @@ import {TabContext, TabList, TabPanel} from '@material-ui/lab'
 import {useAnalysisContextDispatch} from 'analysis/AnalysisContext'
 import {AnalysisTab} from 'analysis/AnalysisTab'
 import {ExplorerTab} from 'explorer/ExplorerTab'
+import {HelpTab} from 'help/HelpTab'
 import {PracticeTab} from 'practice/PracticeTab'
 import React, {useEffect, useLayoutEffect, useRef} from 'react'
 import {SettingsTab} from 'settings/SettingsTab'
@@ -12,9 +13,10 @@ import {useForceUpdate} from 'utils/ForceUpdate'
 const useStyles = makeStyles({
     tabList: {
         height: 'auto',
-        '& button': {
-            flexGrow: 1
-        }
+    },
+    tab: {
+        minWidth: 'unset !important',
+        flex: '1 0 auto',
     },
     tabPanel: {
         padding: '0 !important',
@@ -48,10 +50,11 @@ export const RightBar = () => {
                     <Grid item xs={12}>
                         <TabList ref={tabListRef} className={styles.tabList}
                                  onChange={(event, newValue) => setTab(newValue)}>
-                            <Tab label="explorer" value="explorer"/>
-                            <Tab label="practice" value="practice"/>
-                            <Tab label="analysis" value="analysis"/>
-                            <Tab label="settings" value="settings"/>
+                            <Tab className={styles.tab} label="explorer" value="explorer"/>
+                            <Tab className={styles.tab} label="practice" value="practice"/>
+                            <Tab className={styles.tab} label="analysis" value="analysis"/>
+                            <Tab className={styles.tab} label="settings" value="settings"/>
+                            <Tab className={styles.tab} label="help" value="help"/>
                         </TabList>
                         <div style={{
                             height: `calc(100% - ${headerHeight}px)`,
@@ -62,11 +65,14 @@ export const RightBar = () => {
                             <TabPanel className={styles.tabPanel} value="practice">
                                 <PracticeTab/>
                             </TabPanel>
+                            <TabPanel className={styles.tabPanel} value="help">
+                                <HelpTab/>
+                            </TabPanel>
                             <TabPanel value="analysis">
                                 <AnalysisTab/>
                             </TabPanel>
                             <TabPanel value="settings">
-                                <SettingsTab />
+                                <SettingsTab/>
                             </TabPanel>
                         </div>
                     </Grid>
