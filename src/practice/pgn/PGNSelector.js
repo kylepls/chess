@@ -1,10 +1,10 @@
-import {Grid, makeStyles, Typography} from '@material-ui/core'
-import {LineMoveList} from 'analysis/line/LineMoveList'
+import {makeStyles} from '@material-ui/core'
 import {useBoardContext, useBoardContextDispatch} from 'board/BoardContext'
 
 import {useOpeningsContext} from 'practice/pgn/OpeningsContext'
+import {favoriteOpening, renderMoves, renderName} from 'practice/pgn/VirtualizedRowContent'
 import {usePracticeContextDispatch} from 'practice/PracticeContext'
-import {useEffect, useLayoutEffect, useRef} from 'react'
+import {useEffect, useLayoutEffect, useMemo, useRef} from 'react'
 import {AutoSizer, Column, Table} from 'react-virtualized'
 import 'react-virtualized/styles.css'
 import {useSyncedLocalStorage} from 'use-synced-local-storage'
@@ -28,6 +28,11 @@ const useStyles = makeStyles(theme => ({
             background: theme.palette.primary.dark,
         },
     },
+    heart: {
+        '&:hover': {
+            background: theme.palette.secondary.light,
+        },
+    },
 }))
 
 export const PGNSelector = () => {
@@ -39,21 +44,24 @@ export const PGNSelector = () => {
     }
 }
 
-const renderName = ({cellData: name}) => {
-    return (
-        <Grid container alignItems="center">
-            <Typography>{name}</Typography>
-        </Grid>
-    )
-}
-
-const renderMoves = ({cellData: moves}) => {
-    return <LineMoveList moves={moves} hoverable={true}/>
-}
-
 const ResizeTable = () => {
 
-    const {openings} = useOpeningsContext()
+    const [favoriteOpenings, setFavoriteOpenings] = useSyncedLocalStorage('favoriteOpenings', [])
+    const {openings: unsortedOpenings} = useOpeningsContext()
+    const state = useBoardContext()
+    const [customOpenings, setCustomOpenings] = useSyncedLocalStorage('customOpenings', [])
+
+    const [customOpeningId, setCustomOpeningId] = useSyncedLocalStorage('customOpeningId', 1)
+
+    const openings = useMemo(() => {
+        return Object.values(unsortedOpenings)
+            .sort((a, b) => {
+                const compute = (value) => favoriteOpenings.some(it => it === value.name)
+                const n = compute(b) - compute(a)
+                if (n !== 0) return n
+                return a.name.localeCompare(b.name)
+            })
+    }, [unsortedOpenings, favoriteOpenings, customOpenings])
 
     const dispatchPractice = usePracticeContextDispatch()
 
@@ -64,9 +72,24 @@ const ResizeTable = () => {
     const [selectedOpeningName, setSelectedOpeningName] = useSyncedLocalStorage('selectedOpening')
     const tableRef = useRef()
 
-    let sortedEntries = openings
+    const addCustomOpening = () => {
+        const toMove = state.boardChessjs.turn() === 'b' ? 'black' : 'white'
+        const {orientation} = state
+
+        const opening = {
+            name: `Custom ${customOpeningId}`,
+            moves: state.history,
+            toMove,
+            orientation,
+        }
+
+        setCustomOpenings([...customOpenings, opening])
+        setCustomOpeningId(customOpeningId + 1)
+    }
+
+    let entries = [...customOpenings, ...openings]
     if (!selectedOpeningName) {
-        sortedEntries = sortedEntries.filter(it =>
+        entries = entries.filter(it =>
             it.moves.length >= history.length &&
             it.moves.every((it, i) => {
                 const boardMove = history[i]
@@ -74,10 +97,13 @@ const ResizeTable = () => {
             }),
         )
     }
+    let customPlaceholder = {name: 'Add an opening', moves: state.history, addCustomOpening}
+    entries = [customPlaceholder, ...entries]
 
     useEffect(() => {
         if (openings && selectedOpeningName) {
-            const opening = openings.find(it => it.name === selectedOpeningName)
+            const opening = customOpenings.find(it => it.name === selectedOpeningName) ||
+                openings.find(it => it.name === selectedOpeningName)
             if (!opening) {
                 setSelectedOpeningName(null)
             } else {
@@ -105,7 +131,7 @@ const ResizeTable = () => {
 
     const styles = useStyles()
     const rowClass = ({index}) => {
-        const opening = sortedEntries[index]
+        const opening = entries[index]
         if (selectedOpeningName === opening?.name) {
             return `${styles.selected} ${styles.row}`
         } else {
@@ -114,13 +140,26 @@ const ResizeTable = () => {
     }
 
     useLayoutEffect(() => {
-        const selectedIndex = openings.findIndex(it => it.name === selectedOpeningName)
+        const selectedIndex = entries.findIndex(it => it.name === selectedOpeningName)
         if (selectedIndex !== -1) {
             window.requestAnimationFrame(() => {
                 tableRef.current.scrollToRow(selectedIndex)
             })
         }
     }, [openings])
+
+    const isCustomOpening = (name) => customOpenings.some(it => it.name === name)
+    const removeCustomOpening = (name) => setCustomOpenings(customOpenings.filter(it => it.name !== name))
+    const updateCustomOpeningName = (from, to) => {
+        const openingIndex = customOpenings.findIndex(it => it.name === from)
+        const newOpenings = [...customOpenings]
+        newOpenings[openingIndex] = {...newOpenings[openingIndex], name: to}
+        setCustomOpenings(newOpenings)
+    }
+
+    const addFavoriteOpening = (opening) => setFavoriteOpenings([...favoriteOpenings, opening])
+    const removeFavoriteOpening = (name) => setFavoriteOpenings(favoriteOpenings.filter(it => it !== name))
+    const isFavoriteOpening = (name) => favoriteOpenings.some(it => it === name)
 
     return (
         <AutoSizer>
@@ -131,16 +170,31 @@ const ResizeTable = () => {
                     height={height}
                     loaderHeight={height}
                     rowHeight={height / 5}
-                    rowCount={sortedEntries.length}
-                    rowGetter={({index}) => sortedEntries[index]}
+                    rowCount={entries.length}
+                    rowGetter={({index}) => entries[index]}
                     onRowClick={select}
                     rowClassName={rowClass}
                 >
+                    <Column label={'favorite'} dataKey={'name'} width={width * 0.07}
+                            cellRenderer={props => favoriteOpening({
+                                ...props,
+                                openings: entries,
+                                isCustomOpening,
+                                addCustomOpening,
+                                removeCustomOpening,
+                                isFavoriteOpening,
+                                removeFavoriteOpening,
+                                addFavoriteOpening,
+                            })}/>
                     <Column
                         label="Name"
                         dataKey="name"
-                        width={width * 0.6}
-                        cellRenderer={renderName}
+                        width={width * 0.53}
+                        cellRenderer={props => renderName({
+                            ...props,
+                            isCustomOpening,
+                            updateCustomOpeningName,
+                        })}
                         className={styles.openingName}
                     />
                     <Column label="Moves" dataKey="moves" width={width * 0.4} cellRenderer={renderMoves}/>
@@ -149,12 +203,4 @@ const ResizeTable = () => {
         </AutoSizer>
     )
 }
-
-const Loader = () => {
-    return (
-        <></>
-        // <SpinnerOverlayContainer>
-        //     <SpinnerOverlay size={'10vmin'}/>
-        // </SpinnerOverlayContainer>
-    )
-}
+const Loader = () => (<></>)

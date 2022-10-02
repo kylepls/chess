@@ -43,9 +43,9 @@ export const MoveArrows = () => {
 
     const styles = useStyles()
     return (
-        <Grid container className={styles.root} justify="center">
+        <Grid container className={styles.root} justifyContent="center">
             <Grid item xs={1}>
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                     <Box className={styles.flip}>
                         <FlipIcon onClick={flipBoard}/>
                     </Box>
@@ -55,7 +55,7 @@ export const MoveArrows = () => {
                 <MoveControls/>
             </Grid>
             <Grid item xs={1}>
-                <Grid container justify="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center">
                     <Grid item className={styles.score}>
                         <Typography>{scoreString}</Typography>
                     </Grid>
@@ -76,7 +76,7 @@ const MoveControls = () => {
     const end = () => dispatchBoard({type: 'SET_MOVE', payload: boardState.history.length - 1})
 
     return (
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
             <StartIcon onClick={start}/>
             <PreviousIcon onClick={previous}/>
             <NextIcon onClick={next}/>

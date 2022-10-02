@@ -80,7 +80,7 @@ const SpanValue = ({value}) => {
 const Value = ({value}) => {
     const styles = useStyles()
     return (
-        <Grid container justify="center" alignItems="center">
+        <Grid container justifyContent="center" alignItems="center">
             <Typography className={styles.typography} variant='body2'>{value}</Typography>
         </Grid>
     )

@@ -75,7 +75,7 @@ export const MoveList = () => {
                 onClick={click}
                 className={`${styles.item} ${(activeCss(i))}`}
                 ref={ref}>
-                <Grid container alignItems="center" justify="space-between">
+                <Grid container alignItems="center" justifyContent="space-between">
                     <Typography display="inline">
                         {move.san}
                     </Typography>

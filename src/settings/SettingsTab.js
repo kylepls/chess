@@ -30,9 +30,9 @@ export const SettingsTab = () => {
         <>
             <FormControl className={styles.formControl}>
                 <Typography gutterBottom variant="h5">Speeds</Typography>
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                     <DiscreteRangeSlider className={styles.slider} values={settings.lichessSpeeds}
-                                         possibleValues={Lichess.speeds}
+                                         possiblevalues={Lichess.speeds}
                                          onChange={handleSpeedChange}/>
                 </Grid>
             </FormControl>
@@ -40,9 +40,9 @@ export const SettingsTab = () => {
             <br/>
             <FormControl className={styles.formControl}>
                 <Typography gutterBottom variant="h5">Ratings</Typography>
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                     <DiscreteRangeSlider className={styles.slider} values={settings.lichessRatings}
-                                         possibleValues={Lichess.ratings}
+                                         possiblevalues={Lichess.ratings}
                                          onChange={handleRatingChange}/>
                 </Grid>
             </FormControl>
@@ -51,22 +51,22 @@ export const SettingsTab = () => {
 }
 
 const DiscreteRangeSlider = (props) => {
-    const {values, possibleValues, onChange} = props
+    const {values, possiblevalues, onChange} = props
 
     const handleRatingChange = (event, newRange) => {
         const [start, end] = newRange
-        const newValues = possibleValues.slice(start, end + 1)
+        const newValues = possiblevalues.slice(start, end + 1)
         onChange(newValues)
     }
 
-    const marks = possibleValues.map((it, i) => ({value: i, label: it}))
+    const marks = possiblevalues.map((it, i) => ({value: i, label: it}))
 
-    const indexes = values.map(it => possibleValues.indexOf(it))
+    const indexes = values.map(it => possiblevalues.indexOf(it))
     const minIndex = indexes.min()
     const maxIndex = indexes.max()
 
     return (
-        <Slider {...props} marks={marks} min={0} max={possibleValues.length - 1} value={[minIndex, maxIndex]}
+        <Slider {...props} marks={marks} min={0} max={possiblevalues.length - 1} value={[minIndex, maxIndex]}
                 onChange={handleRatingChange}/>
     )
 }

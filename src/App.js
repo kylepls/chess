@@ -1,4 +1,4 @@
-import {Container, createMuiTheme, CssBaseline, Grid, MuiThemeProvider} from '@material-ui/core'
+import {Container, createTheme, CssBaseline, Grid, MuiThemeProvider} from '@material-ui/core'
 import {makeStyles} from '@material-ui/styles'
 import {AnalysisContextProvider} from 'analysis/AnalysisContext'
 import {SettingsContextProvider} from 'settings/SettingsContext'
@@ -7,9 +7,6 @@ import 'App.css'
 import {Board} from 'board/Board'
 import {BoardContextProvider} from 'board/BoardContext'
 
-import 'chessground/assets/chessground.base.css'
-import 'chessground/assets/chessground.brown.css'
-import 'chessground/assets/chessground.cburnett.css'
 import {OpeningsContextProvider} from 'practice/pgn/OpeningsContext'
 import {PracticeContextProvider} from 'practice/PracticeContext'
 import React from 'react'
@@ -27,7 +24,7 @@ const useStyles = makeStyles({
     },
 })
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         type: 'dark',
         sides: {

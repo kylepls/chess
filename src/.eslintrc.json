@@ -5,14 +5,7 @@
       "error",
       "single"
     ],
-    "no-restricted-imports": [
-      "error",
-      {
-        "patterns": [
-          ".*"
-        ]
-      }
-    ],
+    "no-restricted-imports": ["off"],
     "semi": [
       "error",
       "never"
@@ -23,7 +16,7 @@
     ],
     "max-lines": [
       "error",
-      200
+      333
     ],
     "prefer-destructuring": [
       "error",

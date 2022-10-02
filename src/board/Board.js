@@ -7,6 +7,11 @@ import {Chessground} from 'chessground'
 import {makeMoveFromTo} from 'utils/MoveUtils'
 import React, {useEffect, useLayoutEffect, useRef} from 'react'
 
+import 'chessground/assets/chessground.base.css'
+// import 'chessground/assets/chessground.brown.css'
+import './chessground.brownref.css'
+import 'chessground/assets/chessground.cburnett.css'
+
 const useStyles = makeStyles(theme => ({
     board: ({ghost}) => ({
         position: 'relative',
